@@ -1,0 +1,22 @@
+{
+  "name": "sha3",
+  "version": "2.1.4",
+  "description": "aaa",
+  "main": "..\\Task2\\task2.js",
+  "dependencies": {
+    "sha3": "^2.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "a"
+  },
+  "repository": {
+    "type": "git",
+    "url": "a"
+  },
+  "keywords": [
+    "a"
+  ],
+  "author": "a",
+  "license": "MIT"
+}
