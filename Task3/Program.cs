@@ -16,9 +16,12 @@ namespace Task3 {
       }
       return new string(chars);
     }
-    public static string Menu() { 
+    public static string Menu(string[] moves) { 
       Console.WriteLine("Available moves:");
-      Console.WriteLine("1 - a\n2 - b\n3 - c\n4 - d\n5 - e\n6 - f\n7 - g\n0 - exit");
+      for(int i = 1; i <= moves.Length; i++) {
+        Console.WriteLine($"{i} - {moves[i-1]}");
+      }
+      Console.WriteLine("0 - exit");
       Console.WriteLine("Enter your move:");
       try {
         int choice = Convert.ToInt32( Console.ReadLine());
@@ -32,19 +35,10 @@ namespace Task3 {
       }
       catch {
         Console.WriteLine("Enter the correct line");
-        return Menu();
+        return Menu(moves);
       }
     }
-    public static bool CheckStrings(string[] words) {
-      foreach(var a in words) {
-        if(!moves.Contains(a)) {
-          return false;
-        }
-      }
-      return true;
-    }
-    static string[] moves = { "a", "b", "c", "d", "e","f","g" };
-    public static void Result(string userChoice,string compChoice) {
+    public static void Result(string userChoice,string compChoice,string[] moves) {
       List<string> movesList = new List<string>(moves);
       int userIndex = movesList.IndexOf(userChoice);
       int compIndex = movesList.IndexOf(compChoice);
@@ -64,7 +58,7 @@ namespace Task3 {
           return;
         }
       } else {
-        if(compIndex > userIndex && compIndex < userIndex + rest) {
+        if(compIndex > userIndex && compIndex <= userIndex + rest) {
           Console.WriteLine("You lose");
           return;
         }
@@ -72,15 +66,17 @@ namespace Task3 {
       Console.WriteLine("You win");
     }
     static void Main(string[] args) {
-      if(!args.GroupBy(x => x).Any(x => x.Count() > 1)&& args.Length>=3 && args.Length%2!=0 && CheckStrings(args)) {
-        for(int i = 0; i < args.Length; i++) {
+      if(!args.GroupBy(x => x).Any(x => x.Count() > 1)&& args.Length>=3 && args.Length%2!=0) {
+        while(true) {
           string key = GenerateRandomString(128);
           using(var hmacsha256 = new HMACSHA256(Encoding.UTF8.GetBytes(key))) {
-            var hash = hmacsha256.ComputeHash(Encoding.UTF8.GetBytes(args[i]));
+            string compChoice = args[RandomNumberGenerator.GetInt32(0, args.Length)];
+            var hash = hmacsha256.ComputeHash(Encoding.UTF8.GetBytes(compChoice));
             Console.WriteLine("HMAC:\n" + Convert.ToBase64String(hash));
-            string userChoice = Menu();
+            string userChoice = Menu(args);
             Console.WriteLine("Your move: " + userChoice);
-            Result(userChoice, args[i]);
+            Console.WriteLine("Computer move: " + compChoice);
+            Result(userChoice, compChoice,args);
             Console.WriteLine("HMAC key: "+ key);
           }
         }
