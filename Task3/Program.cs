@@ -25,7 +25,7 @@ namespace Task3 {
       Console.WriteLine("Enter your move:");
       try {
         int choice = Convert.ToInt32( Console.ReadLine());
-        if(choice > 7 || choice < 0) {
+        if(choice > moves.Length || choice < 0) {
           throw new Exception();
         }
         if(choice == 0) {
