@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken()
     <div>
         @Html.ValidationSummary() 
-        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl"/>
         <p>
             <label>Email</label><br />
             @Html.EditorFor(x => x.Email)
