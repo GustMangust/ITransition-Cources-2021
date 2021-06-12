@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="Remote1-Web.config Connection String" description="Remote1 Строка подключения в web.config, используемая приложением для доступа к базе данных." defaultValue="Server=tcp:80.94.168.145,1433, Database=КУРСОВОЙ; Initial Catalog=КУРСОВОЙ; User Id = student; Password = Pa$$w0rd" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Git\\ITransition-Cources-2021\\Task4\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Remote1']/@connectionString" />
+  </parameter>
+  <parameter name="Remote-Web.config Connection String" description="Remote Строка подключения в web.config, используемая приложением для доступа к базе данных." defaultValue="Server=tcp:server-user-manager.database.windows.net,1433;Initial Catalog=user-manager-bd;Persist Security Info=True;User ID=GustMangust;Password=25_sakavika;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30000;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Git\\ITransition-Cources-2021\\Task4\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Remote']/@connectionString" />
+  </parameter>
+  <parameter name="IdentityDb-Web.config Connection String" description="IdentityDb Строка подключения в web.config, используемая приложением для доступа к базе данных." defaultValue="Data Source=GUSTIKMANGUSTIK;Initial Catalog=UserManager;Integrated Security=True;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Git\\ITransition-Cources-2021\\Task4\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='IdentityDb']/@connectionString" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Строка подключения в web.config, используемая приложением для доступа к базе данных." defaultValue="Data Source=(LocalDb)\MSSQLLocalDB;         AttachDbFilename=|DataDirectory|\FormsAuth.mdf;         Initial Catalog=FormsAuth;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Git\\ITransition-Cources-2021\\Task4\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>

@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+    <head runat="server">
+
+        <title></title>
+        @section Scripts {
+            @Scripts.Render("~/Scripts/jquery-1.7.1.min.js")
+            @Scripts.Render("~/Scripts/jquery-ui-1.8.20.min.js")
+            @Scripts.Render("~/bundles/jqueryval")
+            <script>
+                $('.select_all').click(function () {
+                    $('.selected').prop('checked', this.checked)
+                });
+            </script>
+            }
+        </head>
+    <body>
+
+    <div class="row">
+        @using(Html.BeginForm("MyAction", "Home", FormMethod.Post)) {
+            <button name="action" value="block">Block</button>
+            <button name="action" value="unblock">Unblock</button>
+            <button name="action" value="delete">Delete</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.CheckBox("SelectAll", false, new { @class = "select_all" })</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Date Of Registration</th>
+                        <th scope="col">Last login</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                @foreach(var user in ViewBag.Users) {
+                    <tbody>
+                        <tr>
+                            <td><input class="selected" type="checkbox"  name="checkbox" value="@user.Id" /></td>
+                            <td>@user.Id</td>
+                            <td>@user.Name</td>
+                            <td>@user.Email</td>
+                            <td>@user.DateOfRegistration</td>
+                            <td>@user.LastLoginTime</td>
+                            <td>@user.Status</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        }
+    </div>
+    </body>
