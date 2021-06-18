@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows.Forms;
 using Task4.Models;
 
 namespace Task4.Controllers {
@@ -14,10 +16,14 @@ namespace Task4.Controllers {
         return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
       }
     }
+    private IAuthenticationManager AuthenticationManager {
+      get {
+        return HttpContext.GetOwinContext().Authentication;
+      }
+    }
     public async Task<ActionResult> Index() {
-      string result = "Вы не авторизованы";
-      if(User.Identity.IsAuthenticated) {
-        result = "Ваш логин: " + User.Identity.Name;
+      ApplicationUser currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+      if(currentUser!=null && User.Identity.IsAuthenticated && currentUser.Status=="Active") {
         List<ApplicationUser> list = new List<ApplicationUser>(UserManager.Users);
         foreach(var user in list) {
           if(user.LockoutEndDateUtc != null) {
@@ -28,7 +34,7 @@ namespace Task4.Controllers {
         ViewBag.Users = UserManager.Users;
         return View();
       }
-      return View();
+      return View("About");
     }
     [HttpPost]
     public async Task<ActionResult> MyAction(string[] checkbox, string action) {
@@ -64,13 +70,13 @@ namespace Task4.Controllers {
         return RedirectToAction("SignOut", "Home");
       }
       if(flag) {
+        AuthenticationManager.SignOut();
         return RedirectToAction("SignOut", "Home");
       } else {
         return RedirectToAction("Index", "Home");
       }
     }
     public ActionResult SignOut() {
-      var AuthenticationManager = HttpContext.GetOwinContext().Authentication;
       AuthenticationManager.SignOut();
       return RedirectToAction("Login", "Account");
     }

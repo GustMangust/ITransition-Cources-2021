@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
     <head runat="server">
-
         <title></title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
         @section Scripts {
             @Scripts.Render("~/Scripts/jquery-1.7.1.min.js")
             @Scripts.Render("~/Scripts/jquery-ui-1.8.20.min.js")
@@ -14,41 +14,59 @@
                     $('.selected').prop('checked', this.checked)
                 });
             </script>
-            }
-        </head>
+        }
+    </head>
     <body>
 
-    <div class="row">
-        @using(Html.BeginForm("MyAction", "Home", FormMethod.Post)) {
-            <button name="action" value="block">Block</button>
-            <button name="action" value="unblock">Unblock</button>
-            <button name="action" value="delete">Delete</button>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">@Html.CheckBox("SelectAll", false, new { @class = "select_all" })</th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Date Of Registration</th>
-                        <th scope="col">Last login</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                @foreach(var user in ViewBag.Users) {
-                    <tbody>
+        <div class="row">
+            @using(Html.BeginForm("MyAction", "Home", FormMethod.Post)) {
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div style="margin-top: 10px;" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <button  class="btn btn-danger" name="action" value="block">Block</button>
+                            <button  class="btn btn-success" name="action" value="unblock">Unblock</button>
+                            <button  class="btn btn-warning" name="action" value="delete">Delete</button>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+                
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td><input class="selected" type="checkbox"  name="checkbox" value="@user.Id" /></td>
-                            <td>@user.Id</td>
-                            <td>@user.Name</td>
-                            <td>@user.Email</td>
-                            <td>@user.DateOfRegistration</td>
-                            <td>@user.LastLoginTime</td>
-                            <td>@user.Status</td>
+                            <th scope="col">@Html.CheckBox("SelectAll", false, new { @class = "select_all" })</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Date Of Registration</th>
+                            <th scope="col">Last login</th>
+                            <th scope="col">Status</th>
                         </tr>
-                    </tbody>
-                }
-            </table>
-        }
-    </div>
+                    </thead>
+                    @foreach(var user in ViewBag.Users) {
+                        <tbody>
+                            <tr>
+                                <td><input class="selected" type="checkbox" name="checkbox" value="@user.Id" /></td>
+                                <td>@user.Id</td>
+                                <td>@user.Name</td>
+                                <td>@user.Email</td>
+                                <td>@user.DateOfRegistration</td>
+                                <td>@user.LastLoginTime</td>
+                                <td>@user.Status</td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            }
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
     </body>
