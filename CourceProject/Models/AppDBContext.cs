@@ -7,6 +7,7 @@ namespace CourceProject.Models {
     public AppDBContext(DbContextOptions options) : base(options) {
       _options = options;
     }
+    public DbSet<Work> Works { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
       base.OnModelCreating(modelBuilder);
     }

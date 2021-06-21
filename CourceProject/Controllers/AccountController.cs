@@ -1,11 +1,8 @@
 ﻿using CourceProject.Utility;
 using CourceProject.ViewModel;
-using MailKit.Net.Smtp;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -77,16 +74,14 @@ namespace CourceProject.Controllers {
     [AllowAnonymous]
     public async Task<IActionResult> Login(LoginViewModel user) {
       if(ModelState.IsValid) {
-        var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, false);
-        var user1 = new IdentityUser {
-          Email = user.Email
-        };
+        var user1 = await _userManager.FindByEmailAsync(user.Email);
+        var result = await _signInManager.PasswordSignInAsync(user1.UserName, user.Password, user.RememberMe, false);
         if(result.Succeeded) {
           return RedirectToAction("Index", "Home");
-        }else if(!await _userManager.IsEmailConfirmedAsync(user1)) {
+        } else if(!await _userManager.IsEmailConfirmedAsync(user1)) {
           ModelState.AddModelError(string.Empty, "Подтвердите вашу почту");
         } else {
-          ModelState.AddModelError(string.Empty, "Неверный логин");
+          ModelState.AddModelError(string.Empty, "Неверные данные");
         }
       }
       return View(user);

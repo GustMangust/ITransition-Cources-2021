@@ -1,3 +1,4 @@
+using CourceProject.Data.Repository;
 using CourceProject.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +25,7 @@ namespace CourceProject {
         opt.SignIn.RequireConfirmedEmail = true;
 
       }).AddEntityFrameworkStores<AppDBContext>().AddDefaultTokenProviders();
+      services.AddTransient<IRepository, Repository>();
       services.AddControllersWithViews();
       services.AddRazorPages();
     }
