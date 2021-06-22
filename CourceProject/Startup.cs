@@ -18,13 +18,12 @@ namespace CourceProject {
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
-      services.AddDbContext<AppDBContext>(options =>
+      services.AddDbContext<AppDbContext>(options =>
           options.UseSqlServer(
               Configuration.GetConnectionString("local")));
       services.AddIdentity<IdentityUser, IdentityRole>(opt => {
         opt.SignIn.RequireConfirmedEmail = true;
-
-      }).AddEntityFrameworkStores<AppDBContext>().AddDefaultTokenProviders();
+      }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
       services.AddTransient<IRepository, Repository>();
       services.AddControllersWithViews();
       services.AddRazorPages();

@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "yspGdSWQIUjJJPjnbZC9SEGjADzMXkvkgpn3omEBlxIaSjvkp3VcnYKA8cKgFSDN+pLiAGLleglvF4ElBuQLkA==",
+  "dgSpecHash": "as0CN5JXdOx6LyKFUh4zTvQkbcJJjpE5A1ge7wIN69xS4OYEc8xR+0JfE7MvolDgJjR3dH8PUstf2cotlZCT8Q==",
   "success": true,
   "projectFilePath": "D:\\Git\\ITransition-Cources-2021\\CourceProject\\CourceProject.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\GustMangust\\.nuget\\packages\\extended.wpf.toolkit\\4.1.0\\extended.wpf.toolkit.4.1.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\mailkit\\2.6.0\\mailkit.2.6.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\microsoft.aspnet.identity.owin\\2.2.3\\microsoft.aspnet.identity.owin.2.2.3.nupkg.sha512",
@@ -213,16 +212,6 @@
     "C:\\Users\\GustMangust\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Пакет \"Extended.Wpf.Toolkit 4.1.0\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\", а не целевой платформы проекта \".NETCoreApp,Version=v3.1\". Этот пакет может быть не полностью совместим с вашим проектом.",
-      "libraryId": "Extended.Wpf.Toolkit",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    },
     {
       "code": "NU1701",
       "level": "Warning",

@@ -3,7 +3,6 @@ using CourceProject.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace CourceProject.Controllers {
@@ -28,7 +27,7 @@ namespace CourceProject.Controllers {
         };
         var result = await _userManager.CreateAsync(user, model.Password);
         if(result.Succeeded) {
-          await _signInManager.SignInAsync(user, isPersistent: false);
+
           var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
           var callbackUrl = Url.Action(
               "ConfirmEmail",
@@ -60,9 +59,10 @@ namespace CourceProject.Controllers {
         return View("Error");
       }
       var result = await _userManager.ConfirmEmailAsync(user, code);
-      if(result.Succeeded)
+      if(result.Succeeded) {
+        await _signInManager.SignInAsync(user, isPersistent: false);
         return RedirectToAction("Index", "Home");
-      else
+      } else
         return View("Error");
     }
     [HttpGet]
@@ -75,6 +75,11 @@ namespace CourceProject.Controllers {
     public async Task<IActionResult> Login(LoginViewModel user) {
       if(ModelState.IsValid) {
         var user1 = await _userManager.FindByEmailAsync(user.Email);
+
+        if(user1 == null) {
+          ModelState.AddModelError(string.Empty, "Неверные данные");
+          return View(user);
+        }
         var result = await _signInManager.PasswordSignInAsync(user1.UserName, user.Password, user.RememberMe, false);
         if(result.Succeeded) {
           return RedirectToAction("Index", "Home");

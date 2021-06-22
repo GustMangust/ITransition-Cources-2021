@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 
 namespace CourceProject.Data.Repository {
   public class Repository : IRepository {
-    private AppDBContext ctx;
-    public Repository(AppDBContext ctx) {
+    private AppDbContext ctx;
+    public Repository(AppDbContext ctx) {
       this.ctx = ctx;
     }
-    public void AddWork(Work work) {
-      ctx.Works.Add(work);
+    public void AddFanfic(Fanfic work) {
+      ctx.Fanfics.Add(work);
     }
-    public List<Work> GetAllWorks(int id) {
-      return ctx.Works.ToList();
+    public List<Fanfic> GetAllFanfics(int id) {
+      return ctx.Fanfics.ToList();
     }
-    public Work GetWork(int id) {
-      return ctx.Works.FirstOrDefault(x => x.Id == id);
+    public Fanfic GetFanfic(int id) {
+      return ctx.Fanfics.FirstOrDefault(x => x.Id == id);
     }
-    public void RemoveWork(int id) {
-      ctx.Remove(GetWork(id));
+    public void RemoveFanfic(int id) {
+      ctx.Remove(GetFanfic(id));
     }
-    public void UpdateWork(Work work) {
+    public void UpdateFanfic(Fanfic work) {
       ctx.Update(work);
     }
     public async Task<bool> SaveChangesAsync() {

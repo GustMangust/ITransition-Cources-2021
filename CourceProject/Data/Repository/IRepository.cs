@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CourceProject.Data.Repository {
-  public interface IRepository {
-    Work GetWork(int id);
-    List<Work> GetAllWorks(int id);
-    void AddWork(Work work);
-    void RemoveWork(int id);
-    void UpdateWork(Work work);
-    Task<bool> SaveChangesAsync();
-  }
+    public interface IRepository {
+        Fanfic GetFanfic(int id);
+        List<Fanfic> GetAllFanfics(int id);
+        void AddFanfic(Fanfic fanfic);
+        void RemoveFanfic(int id);
+        void UpdateFanfic(Fanfic fanfic);
+        Task<bool> SaveChangesAsync();
+    }
 }

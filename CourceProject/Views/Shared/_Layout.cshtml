@@ -17,8 +17,15 @@
                     <span class="navbar-toggler-icon"></span>
                 </button> 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                
                     @if(User.Identity.IsAuthenticated) {
                         <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GetFanfics">Фанфики</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AddFanfic">Создать фанфик</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
@@ -31,6 +38,9 @@
                         </ul>
                     } else {
                         <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GetFanfics">Фанфики</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
