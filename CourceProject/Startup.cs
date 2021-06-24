@@ -26,6 +26,7 @@ namespace CourceProject {
       }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
       services.AddTransient<IRepository, Repository>();
       services.AddControllersWithViews();
+      services.AddMvcCore();
       services.AddRazorPages();
     }
 

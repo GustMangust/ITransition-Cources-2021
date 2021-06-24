@@ -12,7 +12,7 @@ namespace CourceProject.Data.Repository {
     public void AddFanfic(Fanfic work) {
       ctx.Fanfics.Add(work);
     }
-    public List<Fanfic> GetAllFanfics(int id) {
+    public List<Fanfic> GetAllFanfics() {
       return ctx.Fanfics.ToList();
     }
     public Fanfic GetFanfic(int id) {
@@ -29,6 +29,9 @@ namespace CourceProject.Data.Repository {
         return true;
       }
       return false;
+    }
+    public List<Fanfic> GetUserFanfics(string id) {
+      return new List<Fanfic>(ctx.Fanfics.Where(x => x.User_Id == id));
     }
   }
 }

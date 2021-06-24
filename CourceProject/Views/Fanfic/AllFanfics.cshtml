@@ -1,0 +1,9 @@
+﻿@model List<Fanfic>
+    <div>
+        @foreach(Fanfic f in Model) {
+            <span>@f.Title</span>
+            <span>@f.Description</span>
+            <span>@f.Fandom</span>
+            <hr />
+        }
+    </div>

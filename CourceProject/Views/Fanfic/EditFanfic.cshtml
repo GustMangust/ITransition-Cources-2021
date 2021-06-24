@@ -1,0 +1,25 @@
+﻿@model Fanfic
+    <head runat="server">
+
+        @section Scripts{
+            <script src="Scripts/jquery-3.6.0.js"></script>
+            <script src="Scripts/jquery-3.6.0.min.js"></script>
+            
+            <script>
+                $("#fuck").click(function () {
+                    alert('a');
+                });
+            </script>
+            <script>
+                alert('a');
+            </script>
+            }
+        </head>
+    <body>
+
+<div>
+    <span id="fuck">@Model.Title</span>
+    <span>@Model.Description</span>
+    <span>@Model.Fandom</span>
+</div>
+    </body>

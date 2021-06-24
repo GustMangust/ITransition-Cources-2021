@@ -1,0 +1,12 @@
+﻿@model List<Fanfic>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div>
+    @foreach(Fanfic f in Model) {
+        <a asp-controller="Fanfic" asp-action="EditFanfic" asp-route-id="@f.Id">@f.Title</a>
+        <span>@f.Description</span>
+        <span>@f.Fandom</span>
+        <hr />
+    }
+</div>
