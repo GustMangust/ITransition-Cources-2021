@@ -208,3 +208,7 @@ D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\System.Web
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.csproj.CoreCompileInputs.cache
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.MvcApplicationPartsAssemblyInfo.cs
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.MvcApplicationPartsAssemblyInfo.cache
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Fanfic\AddChapter.cshtml.g.cs
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Fanfic\FanficDetails.cshtml.g.cs
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Fanfic\EditChapter.cshtml.g.cs
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Fanfic\ChapterDetails.cshtml.g.cs

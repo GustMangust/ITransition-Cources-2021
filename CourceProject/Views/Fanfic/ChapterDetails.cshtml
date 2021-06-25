@@ -1,0 +1,9 @@
+﻿@model Chapter
+<div>
+    <div>
+        <span>Глава @Model.Number :</span>
+        <span>@Model.Title</span>
+        <span>@Model.Body</span>
+        <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@Model.Id">Изменить главу</a>
+    </div>
+</div>

@@ -33,5 +33,23 @@ namespace CourceProject.Data.Repository {
     public List<Fanfic> GetUserFanfics(string id) {
       return new List<Fanfic>(ctx.Fanfics.Where(x => x.User_Id == id));
     }
+    public void AddChapter(Chapter chapter) {
+      ctx.Chapters.Add(chapter);
+    }
+    public void RemoveChapter(int id) {
+      ctx.Remove(GetChapter(id));
+    }
+    public void UpdateChapter(Chapter chapter) {
+      ctx.Update(chapter);
+    }
+    public List<Chapter> GetChapters(int fanficId) {
+      return ctx.Chapters.Where(x => x.Fanfic_Id == fanficId).ToList();
+    }
+    public Chapter GetChapter(int id) {
+      return ctx.Chapters.FirstOrDefault(x => x.Id == id);
+    }
+    public List<Chapter> GetAllChapters() {
+      return ctx.Chapters.ToList();
+    }
   }
 }

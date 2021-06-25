@@ -1,0 +1,21 @@
+﻿@model (Fanfic fanfic, List<Chapter> chapters)
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+    <div>
+        <div>
+            <span>@Model.fanfic.Title</span>
+            <span>@Model.fanfic.Description</span>
+            <span>@Model.fanfic.Fandom</span>
+            <a asp-controller="Fanfic" asp-action="EditFanfic" asp-route-id="@Model.fanfic.Id">Изменить детали</a>
+        </div>
+        @foreach(Chapter c in Model.chapters) { 
+            <div>
+                <span>Глава @c.Number :</span>
+                <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-id="@c.Id">@c.Title</a>
+                <span>@c.Body</span>
+                <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@c.Id">Изменить главу</a>
+            </div>
+        }
+        <a asp-controller="Fanfic" asp-action="AddChapter" asp-route-id="@Model.fanfic.Id">Добавить главу</a>
+    </div>

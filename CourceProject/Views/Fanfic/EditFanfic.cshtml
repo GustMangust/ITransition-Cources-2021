@@ -4,22 +4,33 @@
         @section Scripts{
             <script src="Scripts/jquery-3.6.0.js"></script>
             <script src="Scripts/jquery-3.6.0.min.js"></script>
-            
-            <script>
-                $("#fuck").click(function () {
-                    alert('a');
-                });
-            </script>
-            <script>
-                alert('a');
-            </script>
+           
             }
         </head>
     <body>
-
 <div>
-    <span id="fuck">@Model.Title</span>
-    <span>@Model.Description</span>
-    <span>@Model.Fandom</span>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label>Title</label>
+            <input asp-for="Title" value="@Model.Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <input asp-for="Description" value="@Model.Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Fandom</label>
+            <input asp-for="Fandom" value="@Model.Fandom" class="form-control" />
+            <span asp-validation-for="Fandom" class="text-danger"></span>
+        </div>
+        <input asp-for="User_Id" value="@Model.User_Id" type="hidden"/>
+        <input asp-for="Id" value="@Model.Id" type="hidden"/>
+        <button type="submit" class="btn-primary">Подтвердить</button>
+    </form>
 </div>
+
     </body>
