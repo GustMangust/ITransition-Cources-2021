@@ -10,12 +10,17 @@
             <a asp-controller="Fanfic" asp-action="EditFanfic" asp-route-id="@Model.fanfic.Id">Изменить детали</a>
         </div>
         @foreach(Chapter c in Model.chapters) { 
-            <div>
-                <span>Глава @c.Number :</span>
-                <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-id="@c.Id">@c.Title</a>
-                <span>@c.Body</span>
-                <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@c.Id">Изменить главу</a>
-            </div>
+            <form action="" method="post">
+                <div>
+                    <input type="submit"  value="Up"  formaction="../ChapterUp" />
+                    <input type="submit" value="Down" formaction="../ChapterDown" />
+                    <span>Глава @c.Number :</span>
+                    <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-id="@c.Id">@c.Title</a>
+                    <span>@c.Body</span>
+                    <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@c.Id">Изменить главу</a>
+                    <input type="hidden" name="id" value="@c.Id" />
+                </div>
+            </form>
         }
         <a asp-controller="Fanfic" asp-action="AddChapter" asp-route-id="@Model.fanfic.Id">Добавить главу</a>
     </div>

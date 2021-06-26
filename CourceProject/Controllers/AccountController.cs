@@ -27,7 +27,6 @@ namespace CourceProject.Controllers {
         };
         var result = await _userManager.CreateAsync(user, model.Password);
         if(result.Succeeded) {
-
           var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
           var callbackUrl = Url.Action(
               "ConfirmEmail",

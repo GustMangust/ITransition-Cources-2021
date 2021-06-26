@@ -43,7 +43,7 @@ namespace CourceProject.Data.Repository {
       ctx.Update(chapter);
     }
     public List<Chapter> GetChapters(int fanficId) {
-      return ctx.Chapters.Where(x => x.Fanfic_Id == fanficId).ToList();
+      return ctx.Chapters.Where(x => x.Fanfic_Id == fanficId).OrderBy(x => x.Number).ToList();
     }
     public Chapter GetChapter(int id) {
       return ctx.Chapters.FirstOrDefault(x => x.Id == id);

@@ -28,6 +28,9 @@ namespace CourceProject.Controllers {
     [HttpGet]
     public IActionResult FanficDetails(int id) {
       (Fanfic fanfic, List<Chapter> chapters) tuple = (ctx.GetFanfic(id), ctx.GetChapters(id));
+      foreach(Chapter c in ctx.GetAllChapters()) {
+        Debug.WriteLine(c.Number);
+      }
       return View(tuple);
     }
     [HttpGet]
@@ -46,6 +49,7 @@ namespace CourceProject.Controllers {
     public IActionResult AllFanfics() {
       ViewBag.Fanfics = ctx.GetAllFanfics();
       ViewBag.Chapters = ctx.GetAllChapters();
+      
       return View();
     }
     [HttpGet]
@@ -59,6 +63,39 @@ namespace CourceProject.Controllers {
         return RedirectToAction("FanficDetails", "Fanfic", new { id = fanfic.Id });
       }
       return Content("Fail");
+    }
+    [HttpPost]
+    public async Task<IActionResult> ChapterUp(int id) {
+      Chapter chapter = ctx.GetChapter(id);
+       Chapter previousChapter = ctx.GetAllChapters().FirstOrDefault(x => x.Number == chapter.Number - 1);
+      if(previousChapter != null) {
+        previousChapter.Number = chapter.Number;
+        chapter.Number = chapter.Number - 1;
+        ctx.UpdateChapter(previousChapter);
+        ctx.UpdateChapter(chapter);
+          if(await ctx.SaveChangesAsync()) {
+            return RedirectToAction("FanficDetails", "Fanfic", new { id = chapter.Fanfic_Id });
+          }
+        return Content("Fail");
+      } else {
+        return RedirectToAction("FanficDetails", "Fanfic", new { id = chapter.Fanfic_Id });
+      }
+    }
+    public async Task<IActionResult> ChapterDown(int id) {
+      Chapter chapter = ctx.GetChapter(id);
+      Chapter previousChapter = ctx.GetAllChapters().FirstOrDefault(x => x.Number == chapter.Number + 1);
+      if(previousChapter != null) {
+        previousChapter.Number = chapter.Number;
+        chapter.Number = chapter.Number + 1;
+        ctx.UpdateChapter(previousChapter);
+        ctx.UpdateChapter(chapter);
+        if(await ctx.SaveChangesAsync()) {
+          return RedirectToAction("FanficDetails", "Fanfic", new { id = chapter.Fanfic_Id });
+        }
+        return Content("Fail");
+      } else {
+        return RedirectToAction("FanficDetails", "Fanfic", new { id = chapter.Fanfic_Id });
+      }
     }
     [HttpPost]
     public async Task<IActionResult> EditChapter(Chapter chapter) {
