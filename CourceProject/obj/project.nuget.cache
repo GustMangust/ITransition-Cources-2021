@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "EBfbD0orJo8dHOQ3iHi14hhwR+XtMRSxWpYCJ9T/C1Ig41WSRbjZzIG4dBSwgWUSTFiLsiJ1E97y2uhU/Pk/kA==",
+  "dgSpecHash": "rQyIXZ4WFaI4I5dI4xwW+3dRzwMAsmSc/8S1455Iabrbu5ZJJMnFSUwT1F34NJedfFyD7yqLI/1EWoGxzi5iGA==",
   "success": true,
   "projectFilePath": "D:\\Git\\ITransition-Cources-2021\\CourceProject\\CourceProject.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\GustMangust\\.nuget\\packages\\jquery.ui.combined\\1.12.1\\jquery.ui.combined.1.12.1.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\jquery.validation\\1.19.3\\jquery.validation.1.19.3.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\mailkit\\2.6.0\\mailkit.2.6.0.nupkg.sha512",
+    "C:\\Users\\GustMangust\\.nuget\\packages\\markdig\\0.25.0\\markdig.0.25.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\microsoft.aspnet.identity.owin\\2.2.3\\microsoft.aspnet.identity.owin.2.2.3.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\microsoft.aspnet.mvc\\4.0.40804\\microsoft.aspnet.mvc.4.0.40804.nupkg.sha512",
@@ -220,7 +221,8 @@
     "C:\\Users\\GustMangust\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\GustMangust\\.nuget\\packages\\webgrease\\1.5.2\\webgrease.1.5.2.nupkg.sha512"
+    "C:\\Users\\GustMangust\\.nuget\\packages\\webgrease\\1.5.2\\webgrease.1.5.2.nupkg.sha512",
+    "C:\\Users\\GustMangust\\.nuget\\packages\\westwind.aspnetcore.markdown\\3.6.0\\westwind.aspnetcore.markdown.3.6.0.nupkg.sha512"
   ],
   "logs": [
     {

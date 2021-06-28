@@ -27,7 +27,7 @@ using CourceProject.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"826ee6ae6d87dd22a3aa3491212aa95e9fa30bc4", @"/Views/Account/EmailConfirmation.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c3597dc3ff0661d9536d4c234c5bd345b729bb9e", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"307764b4af1380302c3dedab7455d06c51c75054", @"/Views/_ViewImports.cshtml")]
     public class Views_Account_EmailConfirmation : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("itemtype", new global::Microsoft.AspNetCore.Html.HtmlString("http://schema.org/EmailMessage"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);

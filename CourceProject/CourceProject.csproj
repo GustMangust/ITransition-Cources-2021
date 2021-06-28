@@ -9,6 +9,7 @@
     <PackageReference Include="jQuery" Version="3.6.0" />
     <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="jQuery.Validation" Version="1.19.3" />
+    <PackageReference Include="Markdig" Version="0.25.0" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Identity.Owin" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="4.0.40804" />
@@ -25,6 +26,7 @@
     <PackageReference Include="NETCore.MailKit" Version="2.0.3" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.6.0" />
   </ItemGroup>
 
   <ItemGroup>

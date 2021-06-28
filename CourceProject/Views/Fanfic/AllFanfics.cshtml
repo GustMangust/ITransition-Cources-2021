@@ -4,7 +4,8 @@
       foreach(Fanfic f in ViewBag.Fanfics) {
             <span>@f.Title</span>
             <span>@f.Description</span>
-            <span>@f.Fandom</span>
+
+            <span>@f.Fandom_Id</span>
             <div>
                 Главы:<br /> @foreach(Chapter c in list.Where(x=>x.Fanfic_Id==f.Id)){
                 <span>@c.Number .</span>
@@ -13,7 +14,6 @@
                 <br />
                 }
             </div>
-            
             <hr />
         }
     }

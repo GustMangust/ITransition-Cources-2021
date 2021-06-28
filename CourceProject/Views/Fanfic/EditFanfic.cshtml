@@ -4,7 +4,8 @@
         @section Scripts{
             <script src="Scripts/jquery-3.6.0.js"></script>
             <script src="Scripts/jquery-3.6.0.min.js"></script>
-           
+           <script>
+           </script>
             }
         </head>
     <body>
@@ -24,8 +25,7 @@
         </div>
         <div class="form-group">
             <label>Fandom</label>
-            <input asp-for="Fandom" value="@Model.Fandom" class="form-control" />
-            <span asp-validation-for="Fandom" class="text-danger"></span>
+            @Html.DropDownListFor(model => model.Fandom_Id, ViewBag.Id as SelectList)
         </div>
         <input asp-for="User_Id" value="@Model.User_Id" type="hidden"/>
         <input asp-for="Id" value="@Model.Id" type="hidden"/>

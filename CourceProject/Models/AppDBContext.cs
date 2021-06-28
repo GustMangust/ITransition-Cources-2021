@@ -12,5 +12,7 @@ namespace CourceProject.Models {
     }
     public DbSet<Fanfic> Fanfics { get; set; }
     public DbSet<Chapter> Chapters { get; set; }
+    public DbSet<Fandom> Fandoms { get; set; }
+    public DbSet<Tag> Tags { get; set; }
   }
 }

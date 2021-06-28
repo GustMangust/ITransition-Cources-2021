@@ -51,5 +51,21 @@ namespace CourceProject.Data.Repository {
     public List<Chapter> GetAllChapters() {
       return ctx.Chapters.ToList();
     }
+
+    public Fandom GetFandom(int id) {
+      return ctx.Fandoms.FirstOrDefault(x => x.Id == id);
+    }
+
+    public List<Fandom> GetAllFandoms() {
+      return ctx.Fandoms.ToList();
+    }
+
+    public Tag GetTag(int id) {
+      return ctx.Tags.FirstOrDefault(x => x.Id == id);
+    }
+
+    public List<Tag> GetAllTags() {
+      return ctx.Tags.ToList();
+    }
   }
 }

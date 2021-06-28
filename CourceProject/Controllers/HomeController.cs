@@ -1,7 +1,10 @@
 ﻿using CourceProject.Models;
+using CourceProject.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Westwind.AspNetCore.Markdown;
 
 namespace CourceProject.Controllers {
   public class HomeController : Controller {
@@ -11,10 +14,26 @@ namespace CourceProject.Controllers {
       _logger = logger;
     }
 
-    public IActionResult Index() {
+    public IActionResult Index(string a = "") {
+      string markdownText = "## This is a title of Markdown file ";
+      string b = a.Trim();
+      string htmltext = MarkDownParser.Parse(a);
+      htmltext += MarkDownParser.Parse("");// for new line
+      htmltext+= MarkDownParser.Parse(a);
+      /*htmltext += MarkDownParser.Parse("__Strong text__");// for new line
+
+      htmltext += MarkDownParser.Parse("  ");// for new line
+      htmltext += MarkDownParser.Parse("* This is a bullet point");// bullet point*/
+      /*ViewBag.HTMLText = htmltext;
+      ViewBag.Text = a;*/
+      ViewBag.Text = htmltext;
       return View();
     }
-
+    [HttpPost]
+    public IActionResult IndexC(string b) {
+      Debug.WriteLine(b);
+      return RedirectToAction("Index", "Home", new { a = b });
+    }
     public IActionResult Privacy() {
       return View();
     }

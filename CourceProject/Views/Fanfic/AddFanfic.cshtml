@@ -1,4 +1,4 @@
-﻿@model CourceProject.ViewModel.AddFanficViewModel
+﻿@model Fanfic
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,8 +24,8 @@
             </div>
             <div class="form-group">
                 <label>Fandom</label>
-                <input asp-for="Fandom" class="form-control" />
-                <span asp-validation-for="Fandom" class="text-danger"></span>
+                
+                @Html.DropDownListFor(model => model.Fandom_Id, ViewBag.Id as SelectList)
             </div>
             <button type="submit" class="btn-primary">Login</button>
         </form>

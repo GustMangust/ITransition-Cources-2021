@@ -3,6 +3,8 @@ using CourceProject.Models;
 using CourceProject.ViewModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Org.BouncyCastle.Crypto;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,6 +20,7 @@ namespace CourceProject.Controllers {
     }
     [HttpGet]
     public IActionResult AddFanfic() {
+      ViewData["Id"] = new SelectList(ctx.GetAllFandoms(), "Id", "Name");
       return View();
     }
     [HttpGet]
@@ -27,10 +30,7 @@ namespace CourceProject.Controllers {
     }
     [HttpGet]
     public IActionResult FanficDetails(int id) {
-      (Fanfic fanfic, List<Chapter> chapters) tuple = (ctx.GetFanfic(id), ctx.GetChapters(id));
-      foreach(Chapter c in ctx.GetAllChapters()) {
-        Debug.WriteLine(c.Number);
-      }
+      (Fanfic fanfic,Fandom fandom, List<Chapter> chapters) tuple = (ctx.GetFanfic(id),ctx.GetFandom(ctx.GetFanfic(id).Fandom_Id), ctx.GetChapters(id));
       return View(tuple);
     }
     [HttpGet]
@@ -39,10 +39,12 @@ namespace CourceProject.Controllers {
     }
     [HttpGet]
     public IActionResult EditFanfic(int id) {
+      ViewData["Id"] = new SelectList(ctx.GetAllFandoms(), "Id", "Name");
       return View(ctx.GetFanfic(id));
     }
     [HttpGet]
     public IActionResult EditChapter(int id) {
+      Debug.WriteLine(id);
       return View(ctx.GetChapter(id));
     }
     [HttpGet]
@@ -53,8 +55,36 @@ namespace CourceProject.Controllers {
       return View();
     }
     [HttpGet]
-    public IActionResult UserFanfics() {
-      return View(ctx.GetUserFanfics(User.Identity.GetUserId()));
+    public IActionResult UserFanfics(string sortBy="") {
+      (List<Fanfic> Fanfics, List<Fandom> Fandoms) tuple;
+      switch(sortBy) {
+        case "titleAsc":
+          tuple = (ctx.GetUserFanfics(User.Identity.GetUserId()).OrderBy(x=>x.Title).ToList(), ctx.GetAllFandoms());
+          break;
+        case "titleDesc":
+          tuple = (ctx.GetUserFanfics(User.Identity.GetUserId()).OrderByDescending(x => x.Title).ToList(), ctx.GetAllFandoms());
+          break;
+      default:
+          tuple = (ctx.GetUserFanfics(User.Identity.GetUserId()), ctx.GetAllFandoms());
+          break;
+      }
+      return View(tuple);
+    }
+    [HttpPost]
+    public async Task<ActionResult> RemoveChapter(int id) {
+      Chapter removedChapter = ctx.GetChapter(id);
+      List<Chapter> list =  ctx.GetChapters(removedChapter.Fanfic_Id);
+      for(int i = 0; i < list.Count; i++) {
+        if(i > list.IndexOf(removedChapter)) {
+          list[i].Number--;
+          ctx.UpdateChapter(list[i]);
+        }
+      }
+      ctx.RemoveChapter(id);
+      if(await ctx.SaveChangesAsync()) {
+        return RedirectToAction("FanficDetails", "Fanfic", new { id = removedChapter.Fanfic_Id });
+      }
+      return Content("Fail");
     }
     [HttpPost]
     public async Task<IActionResult> EditFanfic(Fanfic fanfic) {
@@ -115,10 +145,10 @@ namespace CourceProject.Controllers {
       return Content("Fail");
     }
     [HttpPost]
-    public async Task<IActionResult> AddFanfic(AddFanficViewModel addFanficViewModel) {
+    public async Task<IActionResult> AddFanfic(Fanfic fanfic) {
       if(ModelState.IsValid) {
-        var fanfic = new Fanfic { Title = addFanficViewModel.Title, Description = addFanficViewModel.Description, Fandom = addFanficViewModel.Fandom, User_Id = User.Identity.GetUserId() };
-        ctx.AddFanfic(fanfic);
+        var fan = new Fanfic { Title = fanfic.Title, Description = fanfic.Description, Fandom_Id = fanfic.Fandom_Id, User_Id = User.Identity.GetUserId() };
+        ctx.AddFanfic(fan);
         if(await ctx.SaveChangesAsync()) {
           return RedirectToAction("UserFanfics", "Fanfic");
         }

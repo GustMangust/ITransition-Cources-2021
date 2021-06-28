@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "CourceProject/1.0.0": {
         "dependencies": {
+          "Markdig": "0.25.0",
           "Microsoft.AspNet.Identity.Core": "2.2.3",
           "Microsoft.AspNet.Identity.Owin": "2.2.3",
           "Microsoft.AspNet.Mvc": "4.0.40804",
@@ -40,6 +41,7 @@
           "NETCore.MailKit": "2.0.3",
           "RestSharp": "106.11.7",
           "System.Configuration.ConfigurationManager": "5.0.0",
+          "Westwind.AspNetCore.Markdown": "3.6.0",
           "jQuery": "3.6.0",
           "jQuery.UI.Combined": "1.12.1",
           "jQuery.Validation": "1.19.3",
@@ -352,6 +354,17 @@
         },
         "compile": {
           "lib/netstandard2.0/MailKit.dll": {}
+        }
+      },
+      "Markdig/0.25.0": {
+        "runtime": {
+          "lib/netcoreapp3.1/Markdig.dll": {
+            "assemblyVersion": "0.25.0.0",
+            "fileVersion": "0.25.0.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Markdig.dll": {}
         }
       },
       "Microsoft.AspNet.Identity.Core/2.2.3": {
@@ -2915,6 +2928,20 @@
           "lib/WebGrease.dll": {}
         }
       },
+      "Westwind.AspNetCore.Markdown/3.6.0": {
+        "dependencies": {
+          "Markdig": "0.25.0"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Westwind.AspNetCore.Markdown.dll": {
+            "assemblyVersion": "3.6.0.0",
+            "fileVersion": "3.6.0.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Westwind.AspNetCore.Markdown.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
         "compile": {
           "Microsoft.AspNetCore.Antiforgery.dll": {}
@@ -4512,6 +4539,13 @@
       "path": "mailkit/2.6.0",
       "hashPath": "mailkit.2.6.0.nupkg.sha512"
     },
+    "Markdig/0.25.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8szvH6U9LvqIpc297eOwC2NEF6f6fsPIV25Vptq21uHgkGCjYxwfSLujcnZa8wgvu71BeK/P00kAbYb/T+OmpQ==",
+      "path": "markdig/0.25.0",
+      "hashPath": "markdig.0.25.0.nupkg.sha512"
+    },
     "Microsoft.AspNet.Identity.Core/2.2.3": {
       "type": "package",
       "serviceable": true,
@@ -5995,6 +6029,13 @@
       "sha512": "sha512-VoyDSOOugLx3q5IyOgEcjeYZQOqV9VWZQT57UtN4szlYhAmOcEjVfKWXbtRqBuX43pgyL9E7nMSIPoryC8Cu1Q==",
       "path": "webgrease/1.5.2",
       "hashPath": "webgrease.1.5.2.nupkg.sha512"
+    },
+    "Westwind.AspNetCore.Markdown/3.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ckpac5PfOaGGkKdvN4a9zl73tCSgXkJkq6/y+bspm/wqlm1QLFKlkIww+F6E6J2c/9oVyP+nXU2wbJ/012n1gA==",
+      "path": "westwind.aspnetcore.markdown/3.6.0",
+      "hashPath": "westwind.aspnetcore.markdown.3.6.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
       "type": "referenceassembly",

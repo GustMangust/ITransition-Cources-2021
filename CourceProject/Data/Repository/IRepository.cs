@@ -16,6 +16,10 @@ namespace CourceProject.Data.Repository {
     List<Chapter> GetAllChapters();
     void RemoveChapter(int id);
     void UpdateChapter(Chapter chapter);
+    Fandom GetFandom(int id);
+    List<Fandom> GetAllFandoms();
+    Tag GetTag(int id);
+    List<Tag> GetAllTags();
     Task<bool> SaveChangesAsync();
   }
 }

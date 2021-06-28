@@ -1,6 +1,20 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
+<form method="post" action="Home/IndexC">
+    <textarea name="b" rows="10" cols="100"></textarea>
+
+
+
+<button type="submit" class="btn-primary">Подтвердить</button>
+</form>
+    <!--
+    <markdown itemid="A">
+        
+    </markdown>
+    -->
+    @Html.Raw(ViewBag.Text)
 </div>

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Westwind.AspNetCore.Markdown;
 
 namespace CourceProject {
   public class Startup {
@@ -24,6 +25,11 @@ namespace CourceProject {
       services.AddIdentity<IdentityUser, IdentityRole>(opt => {
         opt.SignIn.RequireConfirmedEmail = true;
       }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+     /* services.AddMarkdown(config =>
+      {
+        config.AddMarkdownProcessingFolder("/posts/", "Views/__MarkdownPageTemplate.cshtml");
+      });*/
+      services.AddMvc();
       services.AddTransient<IRepository, Repository>();
       services.AddControllersWithViews();
       services.AddMvcCore();
@@ -40,6 +46,7 @@ namespace CourceProject {
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
       }
+     // app.UseMarkdown();
       app.UseHttpsRedirection();
       app.UseStaticFiles();
 

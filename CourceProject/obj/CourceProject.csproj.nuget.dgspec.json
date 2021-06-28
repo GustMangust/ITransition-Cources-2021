@@ -38,9 +38,9 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "MarkdownDeep.Full": {
+            "Markdig": {
               "target": "Package",
-              "version": "[1.5.0, )"
+              "version": "[0.25.0, )"
             },
             "Microsoft.AspNet.Identity.Core": {
               "target": "Package",
@@ -105,6 +105,10 @@
             "System.Configuration.ConfigurationManager": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "Westwind.AspNetCore.Markdown": {
+              "target": "Package",
+              "version": "[3.6.0, )"
             },
             "jQuery": {
               "target": "Package",
