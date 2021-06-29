@@ -67,5 +67,29 @@ namespace CourceProject.Data.Repository {
     public List<Tag> GetAllTags() {
       return ctx.Tags.ToList();
     }
+
+    public List<Comment> GetFanficComments(int fanficId) {
+      return ctx.Comments.Where(x => x.Fanfic_Id == fanficId).ToList();
+    }
+    public void AddComment(Comment comment) {
+      ctx.Comments.Add(comment);
+    }
+
+    public List<Rating> GetFanficRatings(int fanficId) {
+      return ctx.Ratings.Where(x => x.FanficId == fanficId).ToList();
+    }
+
+    public Rating GetRating(int fanficId,string userId) {
+      return ctx.Ratings.FirstOrDefault(x => x.FanficId == fanficId && x.UserId == userId);
+    }
+
+    public void AddRating(Rating rating) {
+      var rate = GetRating(rating.FanficId, rating.UserId);
+      if(rate != null) {
+        ctx.Update(rating);
+      } else {
+        ctx.Ratings.Add(rating);
+      }
+    }
   }
 }

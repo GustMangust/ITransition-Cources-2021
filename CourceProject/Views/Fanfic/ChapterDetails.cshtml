@@ -4,6 +4,8 @@
         <span>Глава @Model.Number :</span>
         <span>@Model.Title</span>
         <span>@Model.Body</span>
-        <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@Model.Id">Изменить главу</a>
-    </div>
+        @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == ViewBag.Id) {
+            <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@Model.Id">Изменить главу</a>
+        }
+        </div>
 </div>

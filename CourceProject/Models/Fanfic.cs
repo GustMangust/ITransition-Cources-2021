@@ -1,6 +1,4 @@
-﻿using CourceProject.Data.Repository;
-
-namespace CourceProject.Models {
+﻿namespace CourceProject.Models {
   public class Fanfic {
     public int Id { get; set; }
     public string Title { get; set; }

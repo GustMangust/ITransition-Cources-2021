@@ -21,5 +21,10 @@ namespace CourceProject.Data.Repository {
     Tag GetTag(int id);
     List<Tag> GetAllTags();
     Task<bool> SaveChangesAsync();
+    List<Comment> GetFanficComments(int fanficId);
+    void AddComment(Comment comment);
+    List<Rating> GetFanficRatings(int fanficId);
+    Rating GetRating(int fanficId, string userId);
+    void AddRating(Rating rating);
   }
 }

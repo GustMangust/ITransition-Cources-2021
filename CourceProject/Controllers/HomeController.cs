@@ -3,8 +3,6 @@ using CourceProject.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using Westwind.AspNetCore.Markdown;
 
 namespace CourceProject.Controllers {
   public class HomeController : Controller {
@@ -19,7 +17,7 @@ namespace CourceProject.Controllers {
       string b = a.Trim();
       string htmltext = MarkDownParser.Parse(a);
       htmltext += MarkDownParser.Parse("");// for new line
-      htmltext+= MarkDownParser.Parse(a);
+      htmltext += MarkDownParser.Parse(a);
       /*htmltext += MarkDownParser.Parse("__Strong text__");// for new line
 
       htmltext += MarkDownParser.Parse("  ");// for new line

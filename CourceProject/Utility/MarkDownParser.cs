@@ -1,8 +1,4 @@
 ﻿using Markdig;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourceProject.Utility {
   public static class MarkDownParser {

@@ -1,4 +1,5 @@
-﻿@model (Fanfic fanfic,Fandom fandom, List<Chapter> chapters)
+﻿@using Microsoft.AspNetCore.Identity;
+@model (Fanfic fanfic, Fandom fandom, List<Chapter> chapters, List<Comment> comments, List<IdentityUser> users,decimal averageRating)
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -7,21 +8,49 @@
             <span>@Model.fanfic.Title</span>
             <span>@Model.fanfic.Description</span>
             <span>@Model.fandom.Name</span>
-            <a asp-controller="Fanfic" asp-action="EditFanfic" asp-route-id="@Model.fanfic.Id">Изменить детали</a>
+            @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) {
+                <a asp-controller="Fanfic" asp-action="EditFanfic" asp-route-id="@Model.fanfic.Id">Изменить детали</a>
+            }
         </div>
-        @foreach(Chapter c in Model.chapters) { 
+        @foreach(Chapter c in Model.chapters) {
             <form action="" method="post">
                 <div>
-                    <input type="submit"  value="Up"  formaction="../ChapterUp" />
-                    <input type="submit" value="Down" formaction="../ChapterDown" />
+                    @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) {
+                        <input type="submit" value="Up" formaction="../ChapterUp" />
+                        <input type="submit" value="Down" formaction="../ChapterDown" />
+                    }
                     <span>Глава @c.Number :</span>
                     <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-id="@c.Id">@c.Title</a>
                     <span>@c.Body</span>
-                    <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@c.Id">Изменить главу</a>
-                    <input type="submit" value="Удалить главу" formaction="../RemoveChapter"/>
+                    @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) {
+                        <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@c.Id">Изменить главу</a>
+                        <input type="submit" value="Удалить главу" formaction="../RemoveChapter" />
+                    }
+                    <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-id="@c.Id">Читать главу</a>
                     <input type="hidden" name="id" value="@c.Id" />
                 </div>
             </form>
         }
-        <a asp-controller="Fanfic" asp-action="AddChapter" asp-route-id="@Model.fanfic.Id">Добавить главу</a>
+        @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) {
+            <a asp-controller="Fanfic" asp-action="AddChapter" asp-route-id="@Model.fanfic.Id">Добавить главу</a>
+        }
+        <div>Оценка: @Model.averageRating</div>
+        <div> Комменты:</div>
+        @foreach(Comment c in Model.comments) {
+            <div>
+                @foreach(IdentityUser u in Model.users) {
+                    if(c.User_Id == u.Id && c.Fanfic_Id == Model.fanfic.Id) {
+                        <div>Никнейм: @u.UserName</div>
+                    }
+                }
+                <div>@c.Body</div>
+            </div>
+        }
+        @if(User.Identity.IsAuthenticated) {
+            <form  method="post">
+                <textarea name="text"></textarea>
+                <input type="hidden" name="fanficId" value="@Model.fanfic.Id"/>
+                <input type="submit" class="btn-primary" formaction="../AddComment" />
+            </form>
+        }
     </div>
