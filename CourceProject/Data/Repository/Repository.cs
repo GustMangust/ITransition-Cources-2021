@@ -1,5 +1,6 @@
 ﻿using CourceProject.Models;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -86,9 +87,27 @@ namespace CourceProject.Data.Repository {
     public void AddRating(Rating rating) {
       var rate = GetRating(rating.FanficId, rating.UserId);
       if(rate != null) {
-        ctx.Update(rating);
+        rate.Mark = rating.Mark;
+        ctx.Update(rate);
       } else {
         ctx.Ratings.Add(rating);
+      }
+    }
+
+    public List<Like> GetChapterLikes(int chapterId) {
+      return ctx.Likes.Where(x => x.ChapterId == chapterId).ToList();
+    }
+
+    public Like GetLike(int chapterId, string userId) {
+      return ctx.Likes.FirstOrDefault(x => x.ChapterId == chapterId && x.UserId == userId);
+    }
+
+    public void AddLike(Like like) {
+      var likeBuf = GetLike(like.ChapterId, like.UserId);
+      if(likeBuf != null) {
+        ctx.Remove(likeBuf);
+      } else {
+        ctx.Likes.Add(like);
       }
     }
   }

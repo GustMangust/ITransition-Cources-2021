@@ -17,7 +17,6 @@ namespace CourceProject.Controllers {
     public FanficController(IRepository repo, Microsoft.AspNetCore.Identity.UserManager<IdentityUser> userManager) {
       _userManager = userManager;
       ctx = repo;
-
     }
     [HttpGet]
     public IActionResult AddFanfic() {
@@ -35,21 +34,25 @@ namespace CourceProject.Controllers {
       foreach(Rating rating in ctx.GetFanficRatings(id)) {
         sum += rating.Mark;
       }
-      /*Debug.WriteLine(sum);
-      Debug.WriteLine(ctx.GetFanficRatings(id).Count);
-      Debug.WriteLine((decimal)(sum / ctx.GetFanficRatings(id).Count));*/
+      decimal averageRating = 0;
+      try {
+        averageRating = Math.Round((decimal)sum / (decimal)ctx.GetFanficRatings(id).Count, 2);
+      }
+      catch {
+        averageRating = 0;
+      }
       (Fanfic , Fandom , List<Chapter>, List<Comment>,List<IdentityUser>,decimal) tuple = (ctx.GetFanfic(id),
                                                                                           ctx.GetFandom(ctx.GetFanfic(id).Fandom_Id), 
                                                                                           ctx.GetChapters(id),ctx.GetFanficComments(id),
                                                                                           _userManager.Users.ToList(),
-                                                                                          Math.Round((decimal)sum / (decimal)ctx.GetFanficRatings(id).Count,2));
+                                                                                          averageRating);
       return View(tuple);
     }
     [HttpGet]
-    public IActionResult ChapterDetails(int id) {
-      var chapter = ctx.GetChapter(id);
-      ViewBag.Id = ctx.GetFanfic(chapter.Fanfic_Id).User_Id;
-      return View(chapter);
+    public IActionResult ChapterDetails(int chapterId) {
+      (Chapter, int) data = (ctx.GetChapter(chapterId), ctx.GetChapterLikes(chapterId).Count);
+      ViewBag.Id = ctx.GetFanfic(ctx.GetChapter(chapterId).Fanfic_Id).User_Id;
+      return View(data);
     }
     [HttpGet]
     public IActionResult EditFanfic(int id) {
@@ -83,10 +86,39 @@ namespace CourceProject.Controllers {
       }
       return View(tuple);
     }
-
+    [HttpGet]
+    public IActionResult ChapterNavigate(int chapterId,string param) {
+      var currentChapter = ctx.GetChapter(chapterId);
+      Chapter chapter;
+      if(param == "Back") {
+        chapter = ctx.GetChapters(currentChapter.Fanfic_Id).FirstOrDefault(x=>x.Number == currentChapter.Number-1);
+      } else {
+        chapter = ctx.GetChapters(currentChapter.Fanfic_Id).FirstOrDefault(x => x.Number == currentChapter.Number + 1);
+      }
+      if(chapter == null) {
+        return RedirectToAction("ChapterDetails", "Fanfic", new { chapterId = chapterId });
+      }
+      return RedirectToAction("ChapterDetails", "Fanfic", new { chapterId = chapter.Id });
+    }
+    [HttpPost]
+    public async Task<ActionResult> AddLike(int chapterId, string userId) {
+      ctx.AddLike(new Like { ChapterId = chapterId, UserId = userId });
+      if(await ctx.SaveChangesAsync()) {
+        return RedirectToAction("ChapterDetails", "Fanfic", new { chapterId = chapterId });
+      }
+      return Content("Fail");
+    }
     [HttpPost]
     public async Task<ActionResult> AddComment(int fanficId,string text) {
       ctx.AddComment(new Comment { Fanfic_Id = fanficId, Body = text,User_Id = User.Identity.GetUserId() });
+      if(await ctx.SaveChangesAsync()) {
+        return RedirectToAction("FanficDetails", "Fanfic", new { id = fanficId });
+      }
+      return Content("Fail");
+    }
+    [HttpPost]
+    public async Task<ActionResult> AddRating(int fanficId,string mark) {
+      ctx.AddRating(new Rating { FanficId = fanficId, Mark = Convert.ToInt32(mark),UserId = User.Identity.GetUserId() });
       if(await ctx.SaveChangesAsync()) {
         return RedirectToAction("FanficDetails", "Fanfic", new { id = fanficId });
       }

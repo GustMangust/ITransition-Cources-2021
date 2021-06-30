@@ -1,11 +1,24 @@
-﻿@model Chapter
+﻿@model (Chapter chapter,int likes)
 <div>
     <div>
-        <span>Глава @Model.Number :</span>
-        <span>@Model.Title</span>
-        <span>@Model.Body</span>
+        <span>Глава @Model.chapter.Number :</span>
+        <span>@Model.chapter.Title</span>
+        <span>@Model.chapter.Body</span>
         @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == ViewBag.Id) {
-            <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@Model.Id">Изменить главу</a>
+            <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@Model.chapter.Id">Изменить главу</a>
+        }
+        <br />
+    <a asp-controller="Fanfic" asp-action="ChapterNavigate" asp-route-chapterId="@Model.chapter.Id" asp-route-param="Back">Back</a>
+    <a asp-controller="Fanfic" asp-action="ChapterNavigate" asp-route-chapterId="@Model.chapter.Id" asp-route-param="Forward">Forward</a>
+    </div>
+    <div>
+        <span>Всего лайков: @Model.likes</span>
+        @if(User.Identity.IsAuthenticated) {
+            <form method="post">
+                <input type="hidden" value="@Model.chapter.Id" name="chapterId" />
+                <input type="hidden" value="@ViewBag.Id" name="userId" />
+                <input type="submit" class="btn-primary" formaction="AddLike" />
+            </form>
         }
         </div>
 </div>

@@ -26,7 +26,7 @@
                         <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@c.Id">Изменить главу</a>
                         <input type="submit" value="Удалить главу" formaction="../RemoveChapter" />
                     }
-                    <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-id="@c.Id">Читать главу</a>
+                    <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-chapterId="@c.Id">Читать главу</a>
                     <input type="hidden" name="id" value="@c.Id" />
                 </div>
             </form>
@@ -47,10 +47,27 @@
             </div>
         }
         @if(User.Identity.IsAuthenticated) {
-            <form  method="post">
+            <form method="post">
                 <textarea name="text"></textarea>
-                <input type="hidden" name="fanficId" value="@Model.fanfic.Id"/>
+                <input type="hidden" name="fanficId" value="@Model.fanfic.Id" />
                 <input type="submit" class="btn-primary" formaction="../AddComment" />
             </form>
+            <form method="post">
+                <input name="mark" type="radio" value="1" />
+                <span>1</span> <br />
+                <input name="mark" type="radio" value="2" />
+                <span>2</span> <br />
+                <input name="mark" type="radio" value="3" />
+                <span>3</span>
+                <input name="mark" type="radio" value="4" />
+                <span>4</span>
+                <input checked="checked" name="mark" type="radio" value="5" />
+                <span>5</span>
+                <input type="hidden" name="fanficId" value="@Model.fanfic.Id" />
+                <p>
+                    <input class="btn-primary" formaction="../AddRating" type="submit" value="Отправить" />
+                </p>
+            </form>
         }
+
     </div>
