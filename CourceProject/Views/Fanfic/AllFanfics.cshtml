@@ -1,6 +1,9 @@
 ﻿    <div>
     @{
+    <a 
         foreach(Fanfic f in ViewBag.Fanfics) {
+        <form method="post">
+
             <span>@f.Title</span>
             <span>@f.Description</span>
             @foreach(Fandom fandom in ViewBag.Fandoms) {
@@ -10,6 +13,7 @@
             }
             <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Id">Подробнее</a>
             <hr />
+        </form>
         }
     }
 </div>

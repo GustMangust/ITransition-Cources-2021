@@ -16,7 +16,7 @@
         @if(User.Identity.IsAuthenticated) {
             <form method="post">
                 <input type="hidden" value="@Model.chapter.Id" name="chapterId" />
-                <input type="hidden" value="@ViewBag.Id" name="userId" />
+                <input type="hidden" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" name="userId" />
                 <input type="submit" class="btn-primary" formaction="AddLike" />
             </form>
         }

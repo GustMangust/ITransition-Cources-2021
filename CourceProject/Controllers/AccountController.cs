@@ -1,19 +1,27 @@
-﻿using CourceProject.Utility;
+﻿using CourceProject.Data.Repository;
+using CourceProject.Models;
+using CourceProject.Utility;
 using CourceProject.ViewModel;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CourceProject.Controllers {
   public class AccountController : Controller {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
-
-    public AccountController(UserManager<IdentityUser> userManager,
+    private IRepository ctx;
+    public AccountController(IRepository repo,Microsoft.AspNetCore.Identity.UserManager<IdentityUser> userManager,
                                   SignInManager<IdentityUser> signInManager) {
       _userManager = userManager;
       _signInManager = signInManager;
+      ctx = repo;
     }
     public IActionResult Register() {
       return View();
@@ -60,7 +68,7 @@ namespace CourceProject.Controllers {
       var result = await _userManager.ConfirmEmailAsync(user, code);
       if(result.Succeeded) {
         await _signInManager.SignInAsync(user, isPersistent: false);
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("AllFanfics", "Fanfic");
       } else
         return View("Error");
     }
@@ -81,7 +89,11 @@ namespace CourceProject.Controllers {
         }
         var result = await _signInManager.PasswordSignInAsync(user1.UserName, user.Password, user.RememberMe, false);
         if(result.Succeeded) {
-          return RedirectToAction("Index", "Home");
+          if(ctx.GetPreferences(user1.Id).Count == 0) {
+            Debug.WriteLine(user1.Id);
+            return RedirectToAction("SetPreferences", "Account");
+          }
+          return RedirectToAction("AllFanfics", "Fanfic");
         } else if(!await _userManager.IsEmailConfirmedAsync(user1)) {
           ModelState.AddModelError(string.Empty, "Подтвердите вашу почту");
         } else {
@@ -94,6 +106,57 @@ namespace CourceProject.Controllers {
       await _signInManager.SignOutAsync();
       return RedirectToAction("Login");
     }
+    [HttpGet]
+    public IActionResult SetPreferences() {
+      ViewData["Id"] = new SelectList(ctx.GetAllFandoms(), "Id", "Name");
+      ViewBag.preferences = ctx.GetPreferences(User.Identity.GetUserId());
+      ViewBag.fandoms = ctx.GetAllFandoms();
+      return View();
+    }
+    [HttpPost]
+    public async Task<IActionResult> SetPreferences(Preference preference) {
+      preference.UserId = User.Identity.GetUserId();
+      if(ctx.GetPreferences(User.Identity.GetUserId()).FirstOrDefault(x => x.FandomId == preference.FandomId) == null) {
+        Debug.WriteLine("Cool");
+        ctx.AddPreference(preference);
 
+      }
+      await ctx.SaveChangesAsync();
+      return RedirectToAction("SetPreferences");
+    }
+    [HttpPost]
+    public async Task<IActionResult> RemovePreference(int preferenceId) {
+      
+      if(ctx.GetPreference(preferenceId) != null && ctx.GetPreferences(User.Identity.GetUserId()).Count-1>=1) {
+        ctx.RemovePreference(preferenceId);
+      }
+      await ctx.SaveChangesAsync();
+      return RedirectToAction("SetPreferences");
+    }
+    [HttpPost]
+    public IActionResult EndChangePreferences() {
+      if(ctx.GetPreferences(User.Identity.GetUserId()).Count >= 1) {
+        return RedirectToAction("AllFanfics", "Fanfic");
+      } else {
+        return RedirectToAction("SetPreferences", "Account");
+      }
+    }
+    [HttpGet]
+    public async Task<IActionResult> UserSettings() {
+      IdentityUser user = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+      ViewBag.User = user;
+      ViewBag.Preferences = ctx.GetPreferences(user.Id);
+      ViewBag.Fandoms = ctx.GetAllFandoms();
+      return View();
+    }
+    [HttpPost]
+    public async Task<IActionResult> EditUsername(string username,string userId) {
+      IdentityUser user = await _userManager.FindByIdAsync(userId);
+      if(username!=null && username != "") {
+        user.UserName = username;
+        await _userManager.UpdateAsync(user);
+      }
+      return RedirectToAction("UserSettings");
+    }
   }
 }

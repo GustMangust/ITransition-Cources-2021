@@ -214,3 +214,6 @@ D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Westwind.A
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.csproj.CoreCompileInputs.cache
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.MvcApplicationPartsAssemblyInfo.cs
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.MvcApplicationPartsAssemblyInfo.cache
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Fanfic\UserBookmarks.cshtml.g.cs
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\SetPreferences.cshtml.g.cs
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\UserSettings.cshtml.g.cs

@@ -1,0 +1,26 @@
+﻿@model Preference
+    <div>
+
+        @{
+                <form method="post">
+                <label>Выберите фэндом (минимум один)</label>
+                    @Html.DropDownListFor(model => model.FandomId, ViewBag.Id as SelectList)
+                    <input class="badge-light" value="add" type="submit"/>
+                    <input class="badge-light" value="Submit" formaction="EndChangePreferences" type="submit"/>
+                    <div>
+
+                @foreach(Preference p in ViewBag.preferences) {
+
+                @foreach(Fandom fandom in ViewBag.fandoms) {
+                    if(fandom.Id == p.FandomId) {
+                        <span>@fandom.Name</span>
+                    }
+                }
+                    <input class="badge-light" value="Delete" formaction="RemovePreference" type="submit" />
+                    <hr />
+                    <input type="hidden" value="@p.Id" name="preferenceId"/>
+                }
+                    </div>
+                </form>
+        }
+    </div>

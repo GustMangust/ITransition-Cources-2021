@@ -1,0 +1,27 @@
+﻿@model Fandom
+    <div>
+        <label>Email: </label>
+        <span>@ViewBag.User.Email</span>
+        <div>
+            <form method="post">
+                <span>Username: </span>
+                <input value="@ViewBag.User.UserName" name="username" />
+                <input type="hidden" name="userId" value="@ViewBag.User.Id" />
+                <input type="submit" class="bg-light" value="Изменить никнейм" formaction="EditUsername" />
+            </form>
+        </div>
+        <div>
+            <span>Мои предпочтения:</span>
+                @foreach(Preference p in ViewBag.Preferences) {
+                <div>
+
+                @foreach(Fandom fandom in ViewBag.Fandoms) {
+                    if(fandom.Id == p.FandomId) {
+                        <span>@fandom.Name</span>
+                    }
+                }
+                </div>
+                }
+                <a asp-controller="Account" asp-action="SetPreferences">Изменить предпочтения</a>
+        </div>
+    </div>

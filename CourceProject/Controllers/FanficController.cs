@@ -66,9 +66,25 @@ namespace CourceProject.Controllers {
     }
     [HttpGet]
     public IActionResult AllFanfics() {
+      if(ctx.GetPreferences(User.Identity.GetUserId()).Count == 0) {
+        Debug.WriteLine("fan");
+        return RedirectToAction("SetPreferences", "Account");
+      }
       ViewBag.Fanfics = ctx.GetAllFanfics();
       ViewBag.Fandoms = ctx.GetAllFandoms();
       return View();
+    }
+    [HttpGet]
+    public IActionResult UserBookmarks() {
+      List<Fanfic> fanfics = new List<Fanfic>();
+      foreach(Bookmark b in ctx.GetBookmarks(User.Identity.GetUserId())) {
+        var fanfic = ctx.GetFanfic(b.FanficId);
+        if(fanfic != null) {
+          fanfics.Add(fanfic);
+        }
+      }
+      (List<Fanfic>, List<Fandom>) data = (fanfics, ctx.GetAllFandoms());
+      return View(data);
     }
     [HttpGet]
     public IActionResult UserFanfics(string sortBy = "") {
@@ -208,6 +224,29 @@ namespace CourceProject.Controllers {
         }
       }
       return RedirectToAction("Index", "Home");
+    }
+    [HttpPost]
+    public async Task<IActionResult> AddFanficToFavourite(int fanficId) {
+      var fanfic = ctx.GetFanfic(fanficId);
+      if(fanfic != null) {
+        ctx.AddBookmark(new Bookmark { FanficId = fanficId, UserId = User.Identity.GetUserId() });
+      }
+      if(await ctx.SaveChangesAsync()) {
+        return RedirectToAction("UserBookmarks", "Fanfic");
+      }
+      return RedirectToAction("AllFanfics","Fanfic");
+    }
+    [HttpPost]
+    public async Task<IActionResult> RemoveBookmark(int fanficId) {
+      var fanfic = ctx.GetFanfic(fanficId);
+      var bookmark = ctx.GetBookmark(User.Identity.GetUserId(),fanficId);
+      if(fanfic != null && bookmark!=null) {
+        ctx.RemoveBookmark(bookmark.Id);
+      }
+      if(await ctx.SaveChangesAsync()) {
+        return RedirectToAction("UserBookmarks", "Fanfic");
+      }
+      return RedirectToAction("UserBookmarks", "Fanfic");
     }
   }
 }

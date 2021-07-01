@@ -68,6 +68,10 @@
                     <input class="btn-primary" formaction="../AddRating" type="submit" value="Отправить" />
                 </p>
             </form>
+            <form method="post">
+                <input type="hidden" name="fanficId" value="@Model.fanfic.Id" />
+                <input type="submit" class="badge-danger" value="В закладки" formaction="../AddFanficToFavourite" />
+            </form>
         }
 
     </div>

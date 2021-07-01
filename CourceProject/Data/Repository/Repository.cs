@@ -105,10 +105,46 @@ namespace CourceProject.Data.Repository {
     public void AddLike(Like like) {
       var likeBuf = GetLike(like.ChapterId, like.UserId);
       if(likeBuf != null) {
+        Debug.WriteLine(likeBuf.UserId);
         ctx.Remove(likeBuf);
       } else {
         ctx.Likes.Add(like);
       }
+    }
+    public Bookmark GetBookmark(string userId,int fanficId) {
+      return ctx.Bookmarks.FirstOrDefault(x => x.UserId == userId && x.FanficId == fanficId);
+    }
+    public List<Bookmark> GetBookmarks(string userId) {
+      return ctx.Bookmarks.Where(x => x.UserId == userId).ToList();
+    }
+
+    public void AddBookmark(Bookmark bookmark) {
+      if(GetBookmark(bookmark.UserId, bookmark.FanficId)==null) {
+        ctx.Bookmarks.Add(bookmark);
+      }
+    }
+
+    public void RemoveBookmark(int bookmarkId) {
+      ctx.Remove(ctx.Bookmarks.FirstOrDefault(x => x.Id == bookmarkId));
+    }
+
+    public List<Preference> GetPreferences(string userId) {
+      return ctx.Preferences.Where(x => x.UserId == userId).ToList();
+    }
+
+    public void AddPreference(Preference preference) {
+      ctx.Preferences.Add(preference);
+    }
+
+    public void RemovePreference(int preferenceId) {
+      ctx.Remove(ctx.Preferences.FirstOrDefault(x => x.Id == preferenceId));
+    }
+
+    public Preference GetPreference(string userId, int fandomId) {
+      return ctx.Preferences.FirstOrDefault(x => x.UserId == userId && x.FandomId == fandomId);
+    }
+    public Preference GetPreference(int preferenceId) {
+      return ctx.Preferences.FirstOrDefault(x => x.Id == preferenceId);
     }
   }
 }

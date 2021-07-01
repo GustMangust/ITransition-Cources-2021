@@ -29,5 +29,15 @@ namespace CourceProject.Data.Repository {
     List<Like> GetChapterLikes(int chapterId);
     Like GetLike(int chapterId, string userId);
     void AddLike(Like like);
+    List<Bookmark> GetBookmarks(string userId);
+    void AddBookmark(Bookmark bookmark);
+    void RemoveBookmark(int bookmarkId);
+    Bookmark GetBookmark(string userId, int fanficId);
+    List<Preference> GetPreferences(string userId);
+    void AddPreference(Preference preference);
+    void RemovePreference(int preferenceId);
+    Preference GetPreference(string userId, int fandomId);
+    Preference GetPreference(int preferenceId);
+    
   }
 }
