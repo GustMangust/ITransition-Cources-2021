@@ -31,8 +31,6 @@
             </div>
             @if(User.IsInRole("Admin") && !String.IsNullOrEmpty(@ViewBag.UserId)) {
                 <input name="userId" value="@ViewBag.UserId" type="hidden"/>
-                <span>Я ТУТ</span>
-                <span>@ViewBag.UserId</span>
             }
             <button type="submit" class="btn-primary">Add</button>
         </form>
