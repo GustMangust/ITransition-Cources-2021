@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,24 +15,43 @@ namespace CourceProject.Controllers {
   public class AccountController : Controller {
     private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> _roleManager;
     private IRepository ctx;
-    public AccountController(IRepository repo,Microsoft.AspNetCore.Identity.UserManager<IdentityUser> userManager,
-                                  SignInManager<IdentityUser> signInManager) {
+    public AccountController(IRepository repo, Microsoft.AspNetCore.Identity.UserManager<IdentityUser> userManager,
+                                  SignInManager<IdentityUser> signInManager, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager) {
       _userManager = userManager;
       _signInManager = signInManager;
       ctx = repo;
+      _roleManager = roleManager;
     }
     public IActionResult Register() {
       return View();
     }
     [HttpPost]
     public async Task<IActionResult> Register(RegisterViewModel model) {
+      var roleResult = await _roleManager.CreateAsync(new IdentityRole("Admin"));
+      var result1 = await _roleManager.CreateAsync(new IdentityRole("User"));
+      if(roleResult.Succeeded && result1.Succeeded) {
+        var admin = new IdentityUser {
+          UserName = "Admin",
+          Email = "admin@admin.com",
+          EmailConfirmed = true
+        };
+        IdentityUser adminExists = await _userManager.FindByEmailAsync(admin.Email);
+        if(adminExists == null) {
+          var adminResult = await _userManager.CreateAsync(admin, "Password_1");
+          if(adminResult.Succeeded) {
+            var roleAdminResult = await _userManager.AddToRoleAsync(admin, "Admin");
+          }
+        }
+      }
       if(ModelState.IsValid) {
         var user = new IdentityUser {
           UserName = model.Username,
           Email = model.Email,
         };
         var result = await _userManager.CreateAsync(user, model.Password);
+        var userRole = await _userManager.AddToRoleAsync(user, "User");
         if(result.Succeeded) {
           var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
           var callbackUrl = Url.Action(
@@ -126,8 +144,8 @@ namespace CourceProject.Controllers {
     }
     [HttpPost]
     public async Task<IActionResult> RemovePreference(int preferenceId) {
-      
-      if(ctx.GetPreference(preferenceId) != null && ctx.GetPreferences(User.Identity.GetUserId()).Count-1>=1) {
+
+      if(ctx.GetPreference(preferenceId) != null && ctx.GetPreferences(User.Identity.GetUserId()).Count - 1 >= 1) {
         ctx.RemovePreference(preferenceId);
       }
       await ctx.SaveChangesAsync();
@@ -150,9 +168,9 @@ namespace CourceProject.Controllers {
       return View();
     }
     [HttpPost]
-    public async Task<IActionResult> EditUsername(string username,string userId) {
+    public async Task<IActionResult> EditUsername(string username, string userId) {
       IdentityUser user = await _userManager.FindByIdAsync(userId);
-      if(username!=null && username != "") {
+      if(username != null && username != "") {
         user.UserName = username;
         await _userManager.UpdateAsync(user);
       }

@@ -22,27 +22,32 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 
                     @if(User.Identity.IsAuthenticated) {
-                        <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AllFanfics">Фанфики</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AddFanfic">Создать фанфик</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="UserFanfics">Мои фанфики</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="UserSettings">Аккаунт</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="UserBookmarks">Мои закладки</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                        </li>
+                        @if(User.IsInRole("Admin")) {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AllFanfics">Фанфики</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminPage">Админка</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AddFanfic">Создать фанфик</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="UserFanfics">Мои фанфики</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="UserSettings">Аккаунт</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="UserBookmarks">Мои закладки</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
-                            </li>
-                        </ul>
-                    } else {
+                        }
+                    </ul>
+                    }else {
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AllFanfics">Фанфики</a>

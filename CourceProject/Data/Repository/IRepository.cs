@@ -38,6 +38,6 @@ namespace CourceProject.Data.Repository {
     void RemovePreference(int preferenceId);
     Preference GetPreference(string userId, int fandomId);
     Preference GetPreference(int preferenceId);
-    
+
   }
 }

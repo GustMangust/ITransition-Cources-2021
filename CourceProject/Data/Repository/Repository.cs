@@ -80,7 +80,7 @@ namespace CourceProject.Data.Repository {
       return ctx.Ratings.Where(x => x.FanficId == fanficId).ToList();
     }
 
-    public Rating GetRating(int fanficId,string userId) {
+    public Rating GetRating(int fanficId, string userId) {
       return ctx.Ratings.FirstOrDefault(x => x.FanficId == fanficId && x.UserId == userId);
     }
 
@@ -111,7 +111,7 @@ namespace CourceProject.Data.Repository {
         ctx.Likes.Add(like);
       }
     }
-    public Bookmark GetBookmark(string userId,int fanficId) {
+    public Bookmark GetBookmark(string userId, int fanficId) {
       return ctx.Bookmarks.FirstOrDefault(x => x.UserId == userId && x.FanficId == fanficId);
     }
     public List<Bookmark> GetBookmarks(string userId) {
@@ -119,7 +119,7 @@ namespace CourceProject.Data.Repository {
     }
 
     public void AddBookmark(Bookmark bookmark) {
-      if(GetBookmark(bookmark.UserId, bookmark.FanficId)==null) {
+      if(GetBookmark(bookmark.UserId, bookmark.FanficId) == null) {
         ctx.Bookmarks.Add(bookmark);
       }
     }

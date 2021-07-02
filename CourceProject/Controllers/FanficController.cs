@@ -1,5 +1,6 @@
 ﻿using CourceProject.Data.Repository;
 using CourceProject.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,9 @@ namespace CourceProject.Controllers {
     }
     [HttpGet]
     public IActionResult AddFanfic() {
+      if(TempData["UserId"] != null) {
+         ViewBag.UserId = TempData["UserId"].ToString();
+      }
       ViewData["Id"] = new SelectList(ctx.GetAllFandoms(), "Id", "Name");
       return View();
     }
@@ -41,9 +45,9 @@ namespace CourceProject.Controllers {
       catch {
         averageRating = 0;
       }
-      (Fanfic , Fandom , List<Chapter>, List<Comment>,List<IdentityUser>,decimal) tuple = (ctx.GetFanfic(id),
-                                                                                          ctx.GetFandom(ctx.GetFanfic(id).Fandom_Id), 
-                                                                                          ctx.GetChapters(id),ctx.GetFanficComments(id),
+      (Fanfic, Fandom, List<Chapter>, List<Comment>, List<IdentityUser>, decimal) tuple = (ctx.GetFanfic(id),
+                                                                                          ctx.GetFandom(ctx.GetFanfic(id).Fandom_Id),
+                                                                                          ctx.GetChapters(id), ctx.GetFanficComments(id),
                                                                                           _userManager.Users.ToList(),
                                                                                           averageRating);
       return View(tuple);
@@ -66,8 +70,7 @@ namespace CourceProject.Controllers {
     }
     [HttpGet]
     public IActionResult AllFanfics() {
-      if(ctx.GetPreferences(User.Identity.GetUserId()).Count == 0) {
-        Debug.WriteLine("fan");
+      if(ctx.GetPreferences(User.Identity.GetUserId()).Count == 0 && User.IsInRole("User")) {
         return RedirectToAction("SetPreferences", "Account");
       }
       ViewBag.Fanfics = ctx.GetAllFanfics();
@@ -103,11 +106,11 @@ namespace CourceProject.Controllers {
       return View(tuple);
     }
     [HttpGet]
-    public IActionResult ChapterNavigate(int chapterId,string param) {
+    public IActionResult ChapterNavigate(int chapterId, string param) {
       var currentChapter = ctx.GetChapter(chapterId);
       Chapter chapter;
       if(param == "Back") {
-        chapter = ctx.GetChapters(currentChapter.Fanfic_Id).FirstOrDefault(x=>x.Number == currentChapter.Number-1);
+        chapter = ctx.GetChapters(currentChapter.Fanfic_Id).FirstOrDefault(x => x.Number == currentChapter.Number - 1);
       } else {
         chapter = ctx.GetChapters(currentChapter.Fanfic_Id).FirstOrDefault(x => x.Number == currentChapter.Number + 1);
       }
@@ -125,16 +128,16 @@ namespace CourceProject.Controllers {
       return Content("Fail");
     }
     [HttpPost]
-    public async Task<ActionResult> AddComment(int fanficId,string text) {
-      ctx.AddComment(new Comment { Fanfic_Id = fanficId, Body = text,User_Id = User.Identity.GetUserId() });
+    public async Task<ActionResult> AddComment(int fanficId, string text) {
+      ctx.AddComment(new Comment { Fanfic_Id = fanficId, Body = text, User_Id = User.Identity.GetUserId() });
       if(await ctx.SaveChangesAsync()) {
         return RedirectToAction("FanficDetails", "Fanfic", new { id = fanficId });
       }
       return Content("Fail");
     }
     [HttpPost]
-    public async Task<ActionResult> AddRating(int fanficId,string mark) {
-      ctx.AddRating(new Rating { FanficId = fanficId, Mark = Convert.ToInt32(mark),UserId = User.Identity.GetUserId() });
+    public async Task<ActionResult> AddRating(int fanficId, string mark) {
+      ctx.AddRating(new Rating { FanficId = fanficId, Mark = Convert.ToInt32(mark), UserId = User.Identity.GetUserId() });
       if(await ctx.SaveChangesAsync()) {
         return RedirectToAction("FanficDetails", "Fanfic", new { id = fanficId });
       }
@@ -215,9 +218,14 @@ namespace CourceProject.Controllers {
       return Content("Fail");
     }
     [HttpPost]
-    public async Task<IActionResult> AddFanfic(Fanfic fanfic) {
+    public async Task<IActionResult> AddFanfic(Fanfic fanfic, string userId) {
       if(ModelState.IsValid) {
-        var fan = new Fanfic { Title = fanfic.Title, Description = fanfic.Description, Fandom_Id = fanfic.Fandom_Id, User_Id = User.Identity.GetUserId() };
+        Debug.WriteLine(userId);
+        if(String.IsNullOrEmpty(userId)) {
+
+          userId = User.Identity.GetUserId();
+        }
+        var fan = new Fanfic { Title = fanfic.Title, Description = fanfic.Description, Fandom_Id = fanfic.Fandom_Id, User_Id = userId };
         ctx.AddFanfic(fan);
         if(await ctx.SaveChangesAsync()) {
           return RedirectToAction("UserFanfics", "Fanfic");
@@ -234,13 +242,13 @@ namespace CourceProject.Controllers {
       if(await ctx.SaveChangesAsync()) {
         return RedirectToAction("UserBookmarks", "Fanfic");
       }
-      return RedirectToAction("AllFanfics","Fanfic");
+      return RedirectToAction("AllFanfics", "Fanfic");
     }
     [HttpPost]
     public async Task<IActionResult> RemoveBookmark(int fanficId) {
       var fanfic = ctx.GetFanfic(fanficId);
-      var bookmark = ctx.GetBookmark(User.Identity.GetUserId(),fanficId);
-      if(fanfic != null && bookmark!=null) {
+      var bookmark = ctx.GetBookmark(User.Identity.GetUserId(), fanficId);
+      if(fanfic != null && bookmark != null) {
         ctx.RemoveBookmark(bookmark.Id);
       }
       if(await ctx.SaveChangesAsync()) {

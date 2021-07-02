@@ -8,21 +8,21 @@
             <span>@Model.fanfic.Title</span>
             <span>@Model.fanfic.Description</span>
             <span>@Model.fandom.Name</span>
-            @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) {
+            @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
                 <a asp-controller="Fanfic" asp-action="EditFanfic" asp-route-id="@Model.fanfic.Id">Изменить детали</a>
             }
         </div>
         @foreach(Chapter c in Model.chapters) {
             <form action="" method="post">
                 <div>
-                    @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) {
+                    @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
                         <input type="submit" value="Up" formaction="../ChapterUp" />
                         <input type="submit" value="Down" formaction="../ChapterDown" />
                     }
                     <span>Глава @c.Number :</span>
                     <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-id="@c.Id">@c.Title</a>
                     <span>@c.Body</span>
-                    @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) {
+                    @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
                         <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@c.Id">Изменить главу</a>
                         <input type="submit" value="Удалить главу" formaction="../RemoveChapter" />
                     }
@@ -31,7 +31,7 @@
                 </div>
             </form>
         }
-        @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) {
+        @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
             <a asp-controller="Fanfic" asp-action="AddChapter" asp-route-id="@Model.fanfic.Id">Добавить главу</a>
         }
         <div>Оценка: @Model.averageRating</div>

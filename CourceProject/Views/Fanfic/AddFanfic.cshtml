@@ -1,4 +1,6 @@
 ﻿@model Fanfic
+@{
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,6 +29,11 @@
                 
                 @Html.DropDownListFor(model => model.Fandom_Id, ViewBag.Id as SelectList)
             </div>
+            @if(User.IsInRole("Admin") && !String.IsNullOrEmpty(@ViewBag.UserId)) {
+                <input name="userId" value="@ViewBag.UserId" type="hidden"/>
+                <span>Я ТУТ</span>
+                <span>@ViewBag.UserId</span>
+            }
             <button type="submit" class="btn-primary">Add</button>
         </form>
     </div>
