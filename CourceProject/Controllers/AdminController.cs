@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +44,7 @@ namespace CourceProject.Controllers {
     public async Task<IActionResult> GiveAdmin(string userId) {
       var user = await _userManager.FindByIdAsync(userId);
       await _userManager.AddToRoleAsync(user, "Admin");
-      await _signInManager.SignInAsync(user,false);
+      await _signInManager.SignInAsync(user, false);
       return RedirectToAction("AdminPage");
     }
     [HttpGet]

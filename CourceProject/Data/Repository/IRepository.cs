@@ -25,6 +25,7 @@ namespace CourceProject.Data.Repository {
     void AddComment(Comment comment);
     List<Rating> GetFanficRatings(int fanficId);
     Rating GetRating(int fanficId, string userId);
+    List<Rating> GetRatings();
     void AddRating(Rating rating);
     List<Like> GetChapterLikes(int chapterId);
     Like GetLike(int chapterId, string userId);

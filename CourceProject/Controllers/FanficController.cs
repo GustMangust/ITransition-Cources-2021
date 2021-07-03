@@ -1,6 +1,12 @@
 ﻿using CourceProject.Data.Repository;
 using CourceProject.Models;
-using Microsoft.Ajax.Utilities;
+using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
+using Lucene.Net.Documents;
+using Lucene.Net.Index;
+using Lucene.Net.Search;
+using Lucene.Net.Store;
+using Lucene.Net.Util;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,7 +29,7 @@ namespace CourceProject.Controllers {
     [HttpGet]
     public IActionResult AddFanfic() {
       if(TempData["UserId"] != null) {
-         ViewBag.UserId = TempData["UserId"].ToString();
+        ViewBag.UserId = TempData["UserId"].ToString();
       }
       ViewData["Id"] = new SelectList(ctx.GetAllFandoms(), "Id", "Name");
       return View();
@@ -68,12 +75,87 @@ namespace CourceProject.Controllers {
       Debug.WriteLine(id);
       return View(ctx.GetChapter(id));
     }
+
     [HttpGet]
     public IActionResult AllFanfics() {
+      const LuceneVersion AppLuceneVersion = LuceneVersion.LUCENE_48;
+
+      var basePath = Environment.GetFolderPath(
+          Environment.SpecialFolder.CommonApplicationData);
+      var indexPath = Path.Combine(basePath, "index");
+
+      using var dir = FSDirectory.Open(indexPath);
+
+      var analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
+
+      var indexConfig = new IndexWriterConfig(AppLuceneVersion, analyzer);
+      using var writer = new IndexWriter(dir, indexConfig);
+
+      var source = new {
+        Name = "Kermit the Frog",
+        FavoritePhrase = "The quick brown fox jumps over the lazy dog"
+      };
+      var doc = new Document
+      {
+          new StringField("name",
+              source.Name,
+              Field.Store.YES),
+          new TextField("favoritePhrase",
+              source.FavoritePhrase,
+              Field.Store.YES)
+      };
+      writer.AddDocument(doc);
+      writer.Flush(triggerMerge: false, applyAllDeletes: false);
+      var phrase = new MultiPhraseQuery
+      {
+          new Term("favoritePhrase", "brown"),
+          new Term("favoritePhrase", "fox")
+      };
+      // Re-use the writer to get real-time updates
+      using var reader = writer.GetReader(applyAllDeletes: true);
+      var searcher = new IndexSearcher(reader);
+      var hits = searcher.Search(phrase, 20 /* top 20 */).ScoreDocs;
+
+      // Display the output in a table
+      Console.WriteLine($"{"Score",10}" +
+          $" {"Name",-15}" +
+          $" {"Favorite Phrase",-40}");
+      foreach(var hit in hits) {
+        var foundDoc = searcher.Doc(hit.Doc);
+        Debug.WriteLine($"{hit.Score:f8}" +
+            $" {foundDoc.Get("name"),-15}" +
+            $" {foundDoc.Get("favoritePhrase"),-40}");
+      }
+
+
       if(ctx.GetPreferences(User.Identity.GetUserId()).Count == 0 && User.IsInRole("User")) {
         return RedirectToAction("SetPreferences", "Account");
       }
-      ViewBag.Fanfics = ctx.GetAllFanfics();
+      List<Fanfic> fanfics = ctx.GetAllFanfics();
+      Dictionary<Fanfic, decimal> allFanficRatings = new Dictionary<Fanfic, decimal>();
+      foreach(Fanfic fan in fanfics) {
+        try {
+          allFanficRatings.Add(fan, Math.Round((decimal)ctx.GetFanficRatings(fan.Id).Sum(x => x.Mark) / (decimal)ctx.GetFanficRatings(fan.Id).Count, 2));
+        }
+        catch {
+          allFanficRatings.Add(fan, 0);
+        }
+      }
+      if(User.IsInRole("User")) {
+        fanfics.Clear();
+        Dictionary<Fanfic, decimal> userFanficRatings = new Dictionary<Fanfic, decimal>();
+        foreach(KeyValuePair<Fanfic, decimal> fanficPair in allFanficRatings) {
+          foreach(Preference pref in ctx.GetPreferences(User.Identity.GetUserId())) {
+            if(pref.FandomId == fanficPair.Key.Fandom_Id) {
+              userFanficRatings.Add(fanficPair.Key, fanficPair.Value);
+              Debug.WriteLine(fanficPair.Key.Title + " " + fanficPair.Value);
+            }
+          }
+        }
+        ViewBag.Fanfics = userFanficRatings;
+      } else {
+        ViewBag.Fanfics = allFanficRatings;
+      }
       ViewBag.Fandoms = ctx.GetAllFandoms();
       return View();
     }

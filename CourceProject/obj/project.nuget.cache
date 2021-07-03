@@ -1,13 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "rQyIXZ4WFaI4I5dI4xwW+3dRzwMAsmSc/8S1455Iabrbu5ZJJMnFSUwT1F34NJedfFyD7yqLI/1EWoGxzi5iGA==",
+  "dgSpecHash": "RP4zF5VEmL1756g1A1YFdJM6vEOjV7zUGToDGP9O+CQPyQHWxcrQldGlZ6UaBzPFbCnWOqK2yQnsDHtcD6/iYg==",
   "success": true,
   "projectFilePath": "D:\\Git\\ITransition-Cources-2021\\CourceProject\\CourceProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\GustMangust\\.nuget\\packages\\antlr\\3.4.1.9004\\antlr.3.4.1.9004.nupkg.sha512",
+    "C:\\Users\\GustMangust\\.nuget\\packages\\j2n\\2.0.0-beta-0012\\j2n.2.0.0-beta-0012.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\jquery\\3.6.0\\jquery.3.6.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\jquery.ui.combined\\1.12.1\\jquery.ui.combined.1.12.1.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\jquery.validation\\1.19.3\\jquery.validation.1.19.3.nupkg.sha512",
+    "C:\\Users\\GustMangust\\.nuget\\packages\\lucene.net\\4.8.0-beta00014\\lucene.net.4.8.0-beta00014.nupkg.sha512",
+    "C:\\Users\\GustMangust\\.nuget\\packages\\lucene.net.analysis.common\\4.8.0-beta00014\\lucene.net.analysis.common.4.8.0-beta00014.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\mailkit\\2.6.0\\mailkit.2.6.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\markdig\\0.25.0\\markdig.0.25.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",

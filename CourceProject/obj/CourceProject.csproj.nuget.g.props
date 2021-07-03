@@ -21,6 +21,7 @@
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\GustMangust\.nuget\packages\microsoft.codeanalysis.analyzers\2.9.4</PkgMicrosoft_CodeAnalysis_Analyzers>
     <PkgjQuery Condition=" '$(PkgjQuery)' == '' ">C:\Users\GustMangust\.nuget\packages\jquery\3.6.0</PkgjQuery>
     <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\GustMangust\.nuget\packages\microsoft.entityframeworkcore.tools\3.1.4</PkgMicrosoft_EntityFrameworkCore_Tools>
+    <PkgLucene_Net Condition=" '$(PkgLucene_Net)' == '' ">C:\Users\GustMangust\.nuget\packages\lucene.net\4.8.0-beta00014</PkgLucene_Net>
     <PkgjQuery_UI_Combined Condition=" '$(PkgjQuery_UI_Combined)' == '' ">C:\Users\GustMangust\.nuget\packages\jquery.ui.combined\1.12.1</PkgjQuery_UI_Combined>
   </PropertyGroup>
 </Project>

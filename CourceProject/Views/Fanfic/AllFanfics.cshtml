@@ -1,18 +1,54 @@
 ﻿    <div>
     @{
-        foreach(Fanfic f in ViewBag.Fanfics) {
-        <form method="post">
+        Dictionary<Fanfic, Decimal> dict = new Dictionary<Fanfic, decimal>(ViewBag.Fanfics);
 
-            <span>@f.Title</span>
-            <span>@f.Description</span>
-            @foreach(Fandom fandom in ViewBag.Fandoms) {
-                if(fandom.Id == f.Fandom_Id) {
-                    <span>@fandom.Name</span>
+        <h3>Top 5 Rating</h3>
+        foreach(KeyValuePair<Fanfic, decimal> f in dict.OrderByDescending(x => x.Value).Take(5).ToList()) {
+            <form method="post">
+                <span>@f.Key.Title</span>
+                <span>@f.Key.Description</span>
+                @foreach(Fandom fandom in ViewBag.Fandoms) {
+                    if(fandom.Id == f.Key.Fandom_Id) {
+                        <span>@fandom.Name</span>
+                    }
                 }
-            }
-            <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Id">Подробнее</a>
-            <hr />
-        </form>
+                <span>@f.Value</span>
+                <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
+                <hr />
+            </form>
         }
+        <h3>Top 5 Updated</h3>
+        foreach(KeyValuePair<Fanfic, decimal> f in dict.OrderByDescending(x => x.Key.UpdateDate).Take(5).ToList()) {
+            <form method="post">
+                <span>@f.Key.Title</span>   
+                <span>@f.Key.Description</span>
+                @foreach(Fandom fandom in ViewBag.Fandoms) {
+                    if(fandom.Id == f.Key.Fandom_Id) {
+                        <span>@fandom.Name</span>
+                    }
+                }
+                <span>@f.Value</span>
+                <span>@f.Key.UpdateDate</span>
+                <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
+                <hr />
+            </form>
+        }
+        <h3>All fanfics by your preferences</h3>
+        foreach(KeyValuePair<Fanfic, decimal> f in dict) {
+            <form method="post">
+                <span>@f.Key.Title</span>
+                <span>@f.Key.Description</span>
+                @foreach(Fandom fandom in ViewBag.Fandoms) {
+                    if(fandom.Id == f.Key.Fandom_Id) {
+                        <span>@fandom.Name</span>
+                    }
+                }
+                <span>@f.Value</span>
+                <span>@f.Key.UpdateDate</span>
+                <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
+                <hr />
+            </form>
+        }
+
     }
 </div>

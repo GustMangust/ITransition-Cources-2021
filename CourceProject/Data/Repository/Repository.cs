@@ -1,4 +1,5 @@
 ﻿using CourceProject.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -36,6 +37,9 @@ namespace CourceProject.Data.Repository {
     }
     public void AddChapter(Chapter chapter) {
       ctx.Chapters.Add(chapter);
+      var fanfic = GetFanfic(chapter.Fanfic_Id);
+      fanfic.UpdateDate = DateTime.Now;
+      UpdateFanfic(fanfic);
     }
     public void RemoveChapter(int id) {
       ctx.Remove(GetChapter(id));
@@ -145,6 +149,10 @@ namespace CourceProject.Data.Repository {
     }
     public Preference GetPreference(int preferenceId) {
       return ctx.Preferences.FirstOrDefault(x => x.Id == preferenceId);
+    }
+
+    public List<Rating> GetRatings() {
+      return ctx.Ratings.ToList();
     }
   }
 }

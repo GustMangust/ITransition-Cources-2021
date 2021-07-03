@@ -113,6 +113,9 @@ namespace CourceProject.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("User_Id")
                         .HasColumnType("nvarchar(max)");
 

@@ -24,6 +24,8 @@
     ".NETCoreApp,Version=v3.1": {
       "CourceProject/1.0.0": {
         "dependencies": {
+          "Lucene.Net": "4.8.0-beta00014",
+          "Lucene.Net.Analysis.Common": "4.8.0-beta00014",
           "Markdig": "0.25.0",
           "Microsoft.AspNet.Identity.Core": "2.2.3",
           "Microsoft.AspNet.Identity.Owin": "2.2.3",
@@ -328,6 +330,17 @@
           "lib/Antlr3.Runtime.dll": {}
         }
       },
+      "J2N/2.0.0-beta-0012": {
+        "runtime": {
+          "lib/netcoreapp3.0/J2N.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.0/J2N.dll": {}
+        }
+      },
       "jQuery/3.6.0": {},
       "jQuery.UI.Combined/1.12.1": {
         "dependencies": {
@@ -337,6 +350,35 @@
       "jQuery.Validation/1.19.3": {
         "dependencies": {
           "jQuery": "3.6.0"
+        }
+      },
+      "Lucene.Net/4.8.0-beta00014": {
+        "dependencies": {
+          "J2N": "2.0.0-beta-0012",
+          "Microsoft.Extensions.Configuration.Abstractions": "3.1.4"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Lucene.Net.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.8.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/Lucene.Net.dll": {}
+        }
+      },
+      "Lucene.Net.Analysis.Common/4.8.0-beta00014": {
+        "dependencies": {
+          "Lucene.Net": "4.8.0-beta00014"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Lucene.Net.Analysis.Common.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.8.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/Lucene.Net.Analysis.Common.dll": {}
         }
       },
       "MailKit/2.6.0": {
@@ -4511,6 +4553,13 @@
       "path": "antlr/3.4.1.9004",
       "hashPath": "antlr.3.4.1.9004.nupkg.sha512"
     },
+    "J2N/2.0.0-beta-0012": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QwXTVD41IYPmSBInJiGvv5c4X2P60p8B8JPuCMGiKuumw9kUv45jbX56Xx0bgYPWHXQVex3tV+NHHZ7cEidLFg==",
+      "path": "j2n/2.0.0-beta-0012",
+      "hashPath": "j2n.2.0.0-beta-0012.nupkg.sha512"
+    },
     "jQuery/3.6.0": {
       "type": "package",
       "serviceable": true,
@@ -4531,6 +4580,20 @@
       "sha512": "sha512-Y9oA2cqUyuJYd+egyp/2VwsUT4mH1X31R7i74VTm1i/7XhnSK0iAWsPvQBXxXz6BhOnEDhAQ0u12Aj830/e1YA==",
       "path": "jquery.validation/1.19.3",
       "hashPath": "jquery.validation.1.19.3.nupkg.sha512"
+    },
+    "Lucene.Net/4.8.0-beta00014": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3iNUYa9X7r90lGFAhaM+tfwoVSw9q5sf503vrxYXtST/+OvzEnnTWiAuLxkH8oyMX8sQFphfsAFYlTn/z4pRSA==",
+      "path": "lucene.net/4.8.0-beta00014",
+      "hashPath": "lucene.net.4.8.0-beta00014.nupkg.sha512"
+    },
+    "Lucene.Net.Analysis.Common/4.8.0-beta00014": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JKlS1wIAouyqUJhuokBB/+yd6uJRXA+F9xNU7Gpbfji4ZwkR+a+Y3oV7AhhyG6M72z3X/PsYK1qCRdDzya4o+A==",
+      "path": "lucene.net.analysis.common/4.8.0-beta00014",
+      "hashPath": "lucene.net.analysis.common.4.8.0-beta00014.nupkg.sha512"
     },
     "MailKit/2.6.0": {
       "type": "package",

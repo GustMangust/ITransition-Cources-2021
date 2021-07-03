@@ -11,6 +11,15 @@
           "lib/Antlr3.Runtime.dll": {}
         }
       },
+      "J2N/2.0.0-beta-0012": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.0/J2N.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/J2N.dll": {}
+        }
+      },
       "jQuery/3.6.0": {
         "type": "package"
       },
@@ -24,6 +33,31 @@
         "type": "package",
         "dependencies": {
           "jQuery": "1.4.4"
+        }
+      },
+      "Lucene.Net/4.8.0-beta00014": {
+        "type": "package",
+        "dependencies": {
+          "J2N": "2.0.0-beta-0012",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/Lucene.Net.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Lucene.Net.dll": {}
+        }
+      },
+      "Lucene.Net.Analysis.Common/4.8.0-beta00014": {
+        "type": "package",
+        "dependencies": {
+          "Lucene.Net": "4.8.0-beta00014"
+        },
+        "compile": {
+          "lib/netstandard2.1/Lucene.Net.Analysis.Common.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Lucene.Net.Analysis.Common.dll": {}
         }
       },
       "MailKit/2.6.0": {
@@ -3413,6 +3447,31 @@
         "lib/Antlr3.Runtime.pdb"
       ]
     },
+    "J2N/2.0.0-beta-0012": {
+      "sha512": "QwXTVD41IYPmSBInJiGvv5c4X2P60p8B8JPuCMGiKuumw9kUv45jbX56Xx0bgYPWHXQVex3tV+NHHZ7cEidLFg==",
+      "type": "package",
+      "path": "j2n/2.0.0-beta-0012",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "j2n-icon-100x100.png",
+        "j2n.2.0.0-beta-0012.nupkg.sha512",
+        "j2n.nuspec",
+        "lib/net40/J2N.dll",
+        "lib/net40/J2N.xml",
+        "lib/net45/J2N.dll",
+        "lib/net45/J2N.xml",
+        "lib/net5.0/J2N.dll",
+        "lib/net5.0/J2N.xml",
+        "lib/netcoreapp3.0/J2N.dll",
+        "lib/netcoreapp3.0/J2N.xml",
+        "lib/netstandard2.0/J2N.dll",
+        "lib/netstandard2.0/J2N.xml",
+        "lib/netstandard2.1/J2N.dll",
+        "lib/netstandard2.1/J2N.xml"
+      ]
+    },
     "jQuery/3.6.0": {
       "sha512": "sSzCTDWn15waSMjDrP21jjgG1j1pwISLaKiVCClwU4XGAmuZt+FScLkdyRvh9ppoIxAW/tJtJBYei+3CAwFQ7g==",
       "type": "package",
@@ -3506,6 +3565,51 @@
         "Content/Scripts/jquery.validate.min.js",
         "jquery.validation.1.19.3.nupkg.sha512",
         "jquery.validation.nuspec"
+      ]
+    },
+    "Lucene.Net/4.8.0-beta00014": {
+      "sha512": "3iNUYa9X7r90lGFAhaM+tfwoVSw9q5sf503vrxYXtST/+OvzEnnTWiAuLxkH8oyMX8sQFphfsAFYlTn/z4pRSA==",
+      "type": "package",
+      "path": "lucene.net/4.8.0-beta00014",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "analyzers/dotnet/cs/Lucene.Net.CodeAnalysis.CSharp.dll",
+        "analyzers/dotnet/vb/Lucene.Net.CodeAnalysis.VisualBasic.dll",
+        "lib/net45/Lucene.Net.dll",
+        "lib/net45/Lucene.Net.xml",
+        "lib/netstandard2.0/Lucene.Net.dll",
+        "lib/netstandard2.0/Lucene.Net.xml",
+        "lib/netstandard2.1/Lucene.Net.dll",
+        "lib/netstandard2.1/Lucene.Net.xml",
+        "lucene-net-icon-128x128.png",
+        "lucene.net.4.8.0-beta00014.nupkg.sha512",
+        "lucene.net.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "Lucene.Net.Analysis.Common/4.8.0-beta00014": {
+      "sha512": "JKlS1wIAouyqUJhuokBB/+yd6uJRXA+F9xNU7Gpbfji4ZwkR+a+Y3oV7AhhyG6M72z3X/PsYK1qCRdDzya4o+A==",
+      "type": "package",
+      "path": "lucene.net.analysis.common/4.8.0-beta00014",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "lib/net45/Lucene.Net.Analysis.Common.dll",
+        "lib/net45/Lucene.Net.Analysis.Common.xml",
+        "lib/netstandard2.0/Lucene.Net.Analysis.Common.dll",
+        "lib/netstandard2.0/Lucene.Net.Analysis.Common.xml",
+        "lib/netstandard2.1/Lucene.Net.Analysis.Common.dll",
+        "lib/netstandard2.1/Lucene.Net.Analysis.Common.xml",
+        "lucene-net-icon-128x128.png",
+        "lucene.net.analysis.common.4.8.0-beta00014.nupkg.sha512",
+        "lucene.net.analysis.common.nuspec"
       ]
     },
     "MailKit/2.6.0": {
@@ -10551,6 +10655,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Lucene.Net >= 4.8.0-beta00014",
+      "Lucene.Net.Analysis.Common >= 4.8.0-beta00014",
       "Markdig >= 0.25.0",
       "Microsoft.AspNet.Identity.Core >= 2.2.3",
       "Microsoft.AspNet.Identity.Owin >= 2.2.3",
@@ -10611,6 +10717,14 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "Lucene.Net": {
+            "target": "Package",
+            "version": "[4.8.0-beta00014, )"
+          },
+          "Lucene.Net.Analysis.Common": {
+            "target": "Package",
+            "version": "[4.8.0-beta00014, )"
+          },
           "Markdig": {
             "target": "Package",
             "version": "[0.25.0, )"

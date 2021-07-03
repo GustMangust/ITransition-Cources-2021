@@ -9,6 +9,8 @@
     <PackageReference Include="jQuery" Version="3.6.0" />
     <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="jQuery.Validation" Version="1.19.3" />
+    <PackageReference Include="Lucene.Net" Version="4.8.0-beta00014" />
+    <PackageReference Include="Lucene.Net.Analysis.Common" Version="4.8.0-beta00014" />
     <PackageReference Include="Markdig" Version="0.25.0" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Identity.Owin" Version="2.2.3" />
