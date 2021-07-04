@@ -65,6 +65,10 @@
         </nav>
     </header>
     <div class="container">
+    <form method="post">
+        <input class="custom-select" name="text"/>
+        <input type="submit" asp-action="Search" asp-controller="Fanfic" value="Поиск" class="badge-light"/>
+    </form>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

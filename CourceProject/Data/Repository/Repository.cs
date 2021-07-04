@@ -154,5 +154,9 @@ namespace CourceProject.Data.Repository {
     public List<Rating> GetRatings() {
       return ctx.Ratings.ToList();
     }
+
+    public List<Comment> GetAllComments() {
+      return ctx.Comments.ToList();
+    }
   }
 }

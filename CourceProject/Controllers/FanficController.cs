@@ -1,6 +1,5 @@
 ﻿using CourceProject.Data.Repository;
 using CourceProject.Models;
-using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -16,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CourceProject.Controllers {
@@ -78,56 +78,6 @@ namespace CourceProject.Controllers {
 
     [HttpGet]
     public IActionResult AllFanfics() {
-      const LuceneVersion AppLuceneVersion = LuceneVersion.LUCENE_48;
-
-      var basePath = Environment.GetFolderPath(
-          Environment.SpecialFolder.CommonApplicationData);
-      var indexPath = Path.Combine(basePath, "index");
-
-      using var dir = FSDirectory.Open(indexPath);
-
-      var analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
-
-      var indexConfig = new IndexWriterConfig(AppLuceneVersion, analyzer);
-      using var writer = new IndexWriter(dir, indexConfig);
-
-      var source = new {
-        Name = "Kermit the Frog",
-        FavoritePhrase = "The quick brown fox jumps over the lazy dog"
-      };
-      var doc = new Document
-      {
-          new StringField("name",
-              source.Name,
-              Field.Store.YES),
-          new TextField("favoritePhrase",
-              source.FavoritePhrase,
-              Field.Store.YES)
-      };
-      writer.AddDocument(doc);
-      writer.Flush(triggerMerge: false, applyAllDeletes: false);
-      var phrase = new MultiPhraseQuery
-      {
-          new Term("favoritePhrase", "brown"),
-          new Term("favoritePhrase", "fox")
-      };
-      // Re-use the writer to get real-time updates
-      using var reader = writer.GetReader(applyAllDeletes: true);
-      var searcher = new IndexSearcher(reader);
-      var hits = searcher.Search(phrase, 20 /* top 20 */).ScoreDocs;
-
-      // Display the output in a table
-      Console.WriteLine($"{"Score",10}" +
-          $" {"Name",-15}" +
-          $" {"Favorite Phrase",-40}");
-      foreach(var hit in hits) {
-        var foundDoc = searcher.Doc(hit.Doc);
-        Debug.WriteLine($"{hit.Score:f8}" +
-            $" {foundDoc.Get("name"),-15}" +
-            $" {foundDoc.Get("favoritePhrase"),-40}");
-      }
-
-
       if(ctx.GetPreferences(User.Identity.GetUserId()).Count == 0 && User.IsInRole("User")) {
         return RedirectToAction("SetPreferences", "Account");
       }
@@ -201,6 +151,15 @@ namespace CourceProject.Controllers {
       }
       return RedirectToAction("ChapterDetails", "Fanfic", new { chapterId = chapter.Id });
     }
+    [HttpGet]
+    public IActionResult SearchResult(string idList) {
+      List<Fanfic> fanfics = new List<Fanfic>();
+      foreach(string str in idList.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)) {
+        fanfics.Add(ctx.GetFanfic(Convert.ToInt32(str)));
+      }
+      (List<Fanfic>, List<Fandom>) data = (fanfics, ctx.GetAllFandoms());
+      return View(data);
+    }
     [HttpPost]
     public async Task<ActionResult> AddLike(int chapterId, string userId) {
       ctx.AddLike(new Like { ChapterId = chapterId, UserId = userId });
@@ -208,6 +167,55 @@ namespace CourceProject.Controllers {
         return RedirectToAction("ChapterDetails", "Fanfic", new { chapterId = chapterId });
       }
       return Content("Fail");
+    }
+    [HttpPost]
+    public async Task<ActionResult> Search(string text) {
+      const LuceneVersion AppLuceneVersion = LuceneVersion.LUCENE_48;
+      var basePath = Environment.GetFolderPath(
+          Environment.SpecialFolder.CommonApplicationData);
+      var indexPath = Path.Combine(basePath, "index");
+      using var dir = FSDirectory.Open(indexPath);
+      var analyzer = new StandardAnalyzer(AppLuceneVersion);
+      var indexConfig = new IndexWriterConfig(AppLuceneVersion, analyzer);
+      using var writer = new IndexWriter(dir, indexConfig);
+      writer.DeleteAll();
+      List<Fandom> fandoms = ctx.GetAllFandoms();
+      List<Chapter> chapters = ctx.GetAllChapters();
+      List<Comment> comments = ctx.GetAllComments();
+      foreach(Fanfic fanfic in ctx.GetAllFanfics()) {
+        StringBuilder info = new StringBuilder($"{fanfic.Title + " " + fanfic.Description + " " + fandoms.FirstOrDefault(x => x.Id == fanfic.Fandom_Id).Name}");
+        foreach(Chapter chapter in chapters.Where(x => x.Fanfic_Id == fanfic.Id)) {
+          info.Append(" " + chapter.Title + " " + chapter.Body);
+        }
+        foreach(Comment comment in comments.Where(x => x.Fanfic_Id == fanfic.Id)) {
+          info.Append(" " + comment.Body);
+        }
+        var doc = new Document
+        {
+            new StringField("FanficId",
+                fanfic.Id.ToString(),
+                Field.Store.YES),
+            new TextField("AllBoundInformation",
+                info.ToString(),
+                Field.Store.YES)
+        };
+        writer.AddDocument(doc);
+      }
+      writer.Flush(triggerMerge: false, applyAllDeletes: false);
+      var phrase = new MultiPhraseQuery();
+      foreach(string word in text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)) {
+        phrase.Add(new Term("AllBoundInformation", word.ToLower()));
+      }
+      using var reader = writer.GetReader(applyAllDeletes: true);
+      var searcher = new IndexSearcher(reader);
+      var hits = searcher.Search(phrase, 20).ScoreDocs;
+      StringBuilder idList = new StringBuilder();
+      foreach(var hit in hits) {
+        var foundDoc = searcher.Doc(hit.Doc);
+        idList.Append(foundDoc.Get("FanficId") + " ");
+      }
+
+      return RedirectToAction("SearchResult", "Fanfic", new { idList = idList.ToString() });
     }
     [HttpPost]
     public async Task<ActionResult> AddComment(int fanficId, string text) {
