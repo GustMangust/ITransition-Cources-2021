@@ -19,6 +19,7 @@
                         <input type="submit" value="Up" formaction="../ChapterUp" />
                         <input type="submit" value="Down" formaction="../ChapterDown" />
                     }
+                    <img src="@c.ImageUrl" width="50" height="50"/>
                     <span>Глава @c.Number :</span>
                     <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-id="@c.Id">@c.Title</a>
                     <span>@c.Body</span>

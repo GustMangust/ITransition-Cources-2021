@@ -38,6 +38,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.15.2, )"
+            },
             "Lucene.Net": {
               "target": "Package",
               "version": "[4.8.0-beta00014, )"

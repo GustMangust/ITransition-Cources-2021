@@ -50,6 +50,12 @@ namespace CourceProject.Migrations
                     b.Property<int>("Fanfic_Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocalUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
@@ -122,6 +128,24 @@ namespace CourceProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Fanfics");
+                });
+
+            modelBuilder.Entity("CourceProject.Models.FanficTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FanficId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FanficTags");
                 });
 
             modelBuilder.Entity("CourceProject.Models.Like", b =>

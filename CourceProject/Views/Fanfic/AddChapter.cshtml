@@ -1,32 +1,76 @@
 ﻿@model Chapter
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CourceProject</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<div class="row">
-    <div class="col-md-12">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label>Title</label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Body</label>
-                <input asp-for="Body" class="form-control" />
-                <span asp-validation-for="Body" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="Fanfic_Id" value="@Model.Fanfic_Id" class="form-control" type="hidden"/>
-            </div>
-            <button type="submit" class="btn-primary">Add</button>
-        </form>
+@{
+
+
+}
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - CourceProject</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link href="~/css/dropzone.min.css" rel="stylesheet">
+        @section Scripts{
+            <script type="text/javascript">
+                Dropzone.options.dropzoneForm = {
+                    paramName: "file",
+                    maxFilesize: 20,
+                    maxFiles: 1,
+                    acceptedFiles: "image/*",
+                    clickable: false,
+                    init: function () {
+                        
+                        this.on('addedfile', function (file) {
+                            if (this.files.length > 1) {
+                                this.removeFile(this.files[0]);
+                                
+                            }
+                        });
+                    },
+                    success: function (file, response) {
+                        document.getElementById("inputId").value = response.fileName;
+                    },
+                    dictMaxFilesExceeded: "Custom max files msg",
+                };
+            </script>
+        }
+    </head>
+<body>
+    <div class="row">
+        <div class="col-md-12">
+        <div  style="width:30%;">
+            @using(Html.BeginForm("UploadFile", "Fanfic",
+                         FormMethod.Post,
+                         new {
+                             @class = "dropzone",
+                             id = "dropzone-form",
+                     
+                         })) {
+                <div class="fallback">
+                    <input name="file" type="file" />
+                </div>
+            }
+        </div>
+            <script src="~/js/dropzone.min.js"></script>
+            <form method="post">
+                <input type="hidden" asp-for="LocalUrl" id="inputId" value="" class="form-control"/>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Body</label>
+                    <input asp-for="Body" class="form-control" />
+                    <span asp-validation-for="Body" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Fanfic_Id" value="@Model.Fanfic_Id" class="form-control" type="hidden" />
+                </div>
+                <button type="submit" class="btn-primary">Add</button>
+            </form>
+        </div>
     </div>
-</div>
+</body>

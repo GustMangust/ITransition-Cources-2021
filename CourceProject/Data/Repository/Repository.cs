@@ -64,7 +64,9 @@ namespace CourceProject.Data.Repository {
     public List<Fandom> GetAllFandoms() {
       return ctx.Fandoms.ToList();
     }
-
+    public Tag GetTagByName(string name) {
+      return ctx.Tags.FirstOrDefault(x => x.Name == name);
+    }
     public Tag GetTag(int id) {
       return ctx.Tags.FirstOrDefault(x => x.Id == id);
     }
@@ -157,6 +159,22 @@ namespace CourceProject.Data.Repository {
 
     public List<Comment> GetAllComments() {
       return ctx.Comments.ToList();
+    }
+
+    public void AddTag(Tag tag) {
+      ctx.Tags.Add(tag);
+    }
+
+    public void AddFanficTag(FanficTag fanficTag) {
+      ctx.FanficTags.Add(fanficTag);
+    }
+
+    public FanficTag GetFanficTag(int fanficTagId) {
+      return ctx.FanficTags.FirstOrDefault(x=>x.Id == fanficTagId);
+    }
+
+    public List<FanficTag> GetFanficTags() {
+      return ctx.FanficTags.ToList();
     }
   }
 }

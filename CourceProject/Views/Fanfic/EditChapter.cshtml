@@ -2,23 +2,70 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-    <div>
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label>Title</label>
-                <input asp-for="Title" value="@Model.Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CourceProject</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="~/css/dropzone.min.css" rel="stylesheet">
+    @section Scripts{
+        <script type="text/javascript">
+                Dropzone.options.dropzoneForm = {
+                    paramName: "file",
+                    maxFilesize: 20,
+                    maxFiles: 1,
+                    acceptedFiles: "image/*",
+                    clickable: false,
+                    init: function () {
+                        this.on('addedfile', function (file) {
+                            if (this.files.length > 1) {
+                                this.removeFile(this.files[0]);
 
-            <div class="form-group">
-                <label>Description</label>
-                <input asp-for="Body" value="@Model.Body" class="form-control" />
-                <span asp-validation-for="Body" class="text-danger"></span>
+                            }
+                        });
+                    },
+                    success: function (file, response) {
+                        document.getElementById("inputId").value = response.fileName;
+                    },
+                    dictMaxFilesExceeded: "Custom max files msg",
+                };
+        </script>
+    }
+</head>
+<div>
+    <div style="width:30%;">
+        @using(Html.BeginForm("UploadFile", "Fanfic",
+                    FormMethod.Post,
+                    new {
+                        @class = "dropzone",
+                        id = "dropzone-form",
+
+                    })) {
+            <div class="fallback">
+                <input name="file" type="file" />
             </div>
-            <input asp-for="Fanfic_Id" value="@Model.Fanfic_Id" type="hidden" />
-            <input asp-for="Number" value="@Model.Number" type="hidden" />
-            <input asp-for="Id" value="@Model.Id" type="hidden" />
-            <button type="submit" class="btn-primary">Подтвердить</button>
-        </form>
+        }
     </div>
+    <script src="~/js/dropzone.min.js"></script>
+    <form method="post">
+        <input type="hidden" asp-for="LocalUrl" id="inputId" value="@ViewBag.LocalUrl" class="form-control" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label>Title</label>
+            <input asp-for="Title" value="@Model.Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <input asp-for="Body" value="@Model.Body" class="form-control" />
+            <span asp-validation-for="Body" class="text-danger"></span>
+        </div>
+        <input asp-for="Fanfic_Id" value="@Model.Fanfic_Id" type="hidden" />
+        <input asp-for="Number" value="@Model.Number" type="hidden" />
+        <input asp-for="Id" value="@Model.Id" type="hidden" />
+        <button type="submit" class="btn-primary">Подтвердить</button>
+    </form>
+</div>
