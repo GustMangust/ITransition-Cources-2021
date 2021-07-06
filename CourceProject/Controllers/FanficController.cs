@@ -1,6 +1,4 @@
-﻿using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using CourceProject.Data.Repository;
+﻿using CourceProject.Data.Repository;
 using CourceProject.Models;
 using CourceProject.Utility;
 using CourceProject.ViewModel;
@@ -19,7 +17,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -47,6 +44,15 @@ namespace CourceProject.Controllers {
     public IActionResult AddChapter(int id) {
       Chapter chapter = new Chapter { Fanfic_Id = id };
       return View(chapter);
+    }
+    [HttpGet]
+    public IActionResult GetFanficsByTag(int tagId) {
+      List<Fanfic> fanfics = new List<Fanfic>();
+      foreach(FanficTag fanficTag in ctx.GetFanficTags().Where(x=>x.TagId == tagId)) {
+        fanfics.Add(ctx.GetFanfic(fanficTag.FanficId));
+      }
+      (List<Fanfic>, List<Fandom>) data = (fanfics, ctx.GetAllFandoms());
+      return View(data);
     }
     [HttpGet]
     public IActionResult FanficDetails(int id) {
@@ -77,6 +83,12 @@ namespace CourceProject.Controllers {
     [HttpGet]
     public IActionResult EditFanfic(int id) {
       ViewBag.Fanfic = ctx.GetFanfic(id);
+      StringBuilder stringBuilder = new StringBuilder();
+      foreach(FanficTag tag in ctx.GetFanficTags().Where(x => x.FanficId == id)) {
+        stringBuilder.Append(ctx.GetTag(tag.TagId).Name + " ");
+      }
+      ViewBag.Tags = stringBuilder.ToString();
+
       ViewData["Id"] = new SelectList(ctx.GetAllFandoms(), "Id", "Name");
       return View();
     }
@@ -85,31 +97,16 @@ namespace CourceProject.Controllers {
       ViewBag.LocalUrl = ctx.GetChapter(id).LocalUrl;
       return View(ctx.GetChapter(id));
     }
-    [HttpPost]
-    public async Task<IActionResult> UploadFile(IFormFile file) {
-
-      try {
-        string filePath = "";
-        if(file.Length > 0) {
-          string folderRoot = Path.Combine(hostingEnv.ContentRootPath, "Uploads");
-          filePath = Guid.NewGuid() + Path.GetExtension(file.FileName);
-          filePath = Path.Combine(folderRoot, filePath);
-          using(var stream = new FileStream(filePath, FileMode.Create)) {
-            await file.CopyToAsync(stream);
-          }
-        }
-        return Ok(new { success = true, message = "File Uploaded",fileName = filePath });
-      }
-      catch(Exception) {
-        return BadRequest(new { success = false, message = "Error file failed to upload" });
-      }
-
-    }
     [HttpGet]
     public IActionResult AllFanfics() {
       if(ctx.GetPreferences(User.Identity.GetUserId()).Count == 0 && User.IsInRole("User")) {
         return RedirectToAction("SetPreferences", "Account");
       }
+      List<Tag> tags = new List<Tag>();
+      foreach(FanficTag fanficTag in ctx.GetFanficTags()) {
+        tags.Add(ctx.GetAllTags().FirstOrDefault(x => x.Id == fanficTag.TagId));
+      }
+      ViewBag.Tags = tags.Distinct();
       List<Fanfic> fanfics = ctx.GetAllFanfics();
       Dictionary<Fanfic, decimal> allFanficRatings = new Dictionary<Fanfic, decimal>();
       foreach(Fanfic fan in fanfics) {
@@ -188,6 +185,26 @@ namespace CourceProject.Controllers {
       }
       (List<Fanfic>, List<Fandom>) data = (fanfics, ctx.GetAllFandoms());
       return View(data);
+    }
+    [HttpPost]
+    public async Task<IActionResult> UploadFile(IFormFile file) {
+
+      try {
+        string filePath = "";
+        if(file.Length > 0) {
+          string folderRoot = Path.Combine(hostingEnv.ContentRootPath, "Uploads");
+          filePath = Guid.NewGuid() + Path.GetExtension(file.FileName);
+          filePath = Path.Combine(folderRoot, filePath);
+          using(var stream = new FileStream(filePath, FileMode.Create)) {
+            await file.CopyToAsync(stream);
+          }
+        }
+        return Ok(new { success = true, message = "File Uploaded", fileName = filePath });
+      }
+      catch(Exception) {
+        return BadRequest(new { success = false, message = "Error file failed to upload" });
+      }
+
     }
     [HttpPost]
     public async Task<ActionResult> AddLike(int chapterId, string userId) {
@@ -279,12 +296,36 @@ namespace CourceProject.Controllers {
       return Content("Fail");
     }
     [HttpPost]
-    public async Task<IActionResult> EditFanfic(Fanfic fanfic) {
+    public async Task<IActionResult> EditFanfic(EditFanficViewModel fanficVM) {
+      Fanfic fanfic = ctx.GetFanfic(fanficVM.Id);
+      fanfic.Id = fanficVM.Id;
+      fanfic.Description = fanficVM.Description;
+      fanfic.Fandom_Id = fanficVM.FandomId;
+      fanfic.User_Id = fanficVM.UserId;
       ctx.UpdateFanfic(fanfic);
-      if(await ctx.SaveChangesAsync()) {
-        return RedirectToAction("FanficDetails", "Fanfic", new { id = fanfic.Id });
+      List<Tag> tags = ctx.GetAllTags();
+      List<string> newTags = fanficVM.Tags.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
+      foreach(FanficTag fanficTag in ctx.GetFanficTags().Where(x => x.FanficId == fanficVM.Id)) {
+        if(!newTags.Contains(ctx.GetTag(fanficTag.Id).Name)) {
+          ctx.RemoveFanficTag(fanficTag.Id);
+        }
       }
-      return Content("Fail");
+      await ctx.SaveChangesAsync();
+      foreach(string tag in newTags) {
+        var tagFound = ctx.GetAllTags().FirstOrDefault(x => x.Name == tag);
+        if(tagFound == null) {
+          ctx.AddTag(new Tag { Name = tag });
+          await ctx.SaveChangesAsync();
+          ctx.AddFanficTag(new FanficTag { FanficId = fanficVM.Id, TagId = ctx.GetTagByName(tag).Id });
+          await ctx.SaveChangesAsync();
+          continue;
+        }
+        if(ctx.GetFanficTags().Where(x => x.FanficId == fanficVM.Id && x.TagId == ctx.GetTagByName(tag).Id) == null) {
+          ctx.AddFanficTag(new FanficTag { FanficId = fanficVM.Id, TagId = ctx.GetTagByName(tag).Id });
+          await ctx.SaveChangesAsync();
+        }
+      }
+      return RedirectToAction("FanficDetails", "Fanfic", new { id = fanfic.Id });
     }
     [HttpPost]
     public async Task<IActionResult> ChapterUp(int id) {
@@ -330,7 +371,7 @@ namespace CourceProject.Controllers {
     }
     [HttpPost]
     public async Task<IActionResult> AddChapter(Chapter c) {
-      var chapter = new Chapter { Title = c.Title, Body = c.Body, Fanfic_Id = c.Fanfic_Id, Number = ctx.GetAllChapters().Where(x => x.Fanfic_Id == c.Fanfic_Id).ToList().Count + 1, ImageUrl = ImageManagement.AddImageToChapter(c),LocalUrl = c.LocalUrl };
+      var chapter = new Chapter { Title = c.Title, Body = c.Body, Fanfic_Id = c.Fanfic_Id, Number = ctx.GetAllChapters().Where(x => x.Fanfic_Id == c.Fanfic_Id).ToList().Count + 1, ImageUrl = ImageManagement.AddImageToChapter(c), LocalUrl = c.LocalUrl };
       ctx.AddChapter(chapter);
       if(await ctx.SaveChangesAsync()) {
         return RedirectToAction("FanficDetails", "Fanfic", new { id = c.Fanfic_Id });
@@ -344,7 +385,7 @@ namespace CourceProject.Controllers {
 
           userId = User.Identity.GetUserId();
         }
- 
+
         var fan = new Fanfic { Title = fanfic.Title, Description = fanfic.Description, Fandom_Id = fanfic.FandomId, User_Id = userId };
         ctx.AddFanfic(fan);
         await ctx.SaveChangesAsync();
@@ -356,12 +397,12 @@ namespace CourceProject.Controllers {
             await ctx.SaveChangesAsync();
           }
           int fanficId = ctx.GetUserFanfics(userId).FirstOrDefault(x => x.Title == fanfic.Title && x.Description == fanfic.Description && x.Fandom_Id == fanfic.FandomId).Id;
-          ctx.AddFanficTag(new FanficTag { FanficId =  fanficId,TagId=ctx.GetTagByName(tag).Id});
+          ctx.AddFanficTag(new FanficTag { FanficId = fanficId, TagId = ctx.GetTagByName(tag).Id });
         }
       }
       if(await ctx.SaveChangesAsync()) {
-          return RedirectToAction("UserFanfics", "Fanfic");
-        }
+        return RedirectToAction("UserFanfics", "Fanfic");
+      }
       return RedirectToAction("Index", "Home");
     }
     [HttpPost]

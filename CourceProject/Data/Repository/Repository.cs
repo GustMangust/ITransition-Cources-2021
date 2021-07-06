@@ -170,11 +170,15 @@ namespace CourceProject.Data.Repository {
     }
 
     public FanficTag GetFanficTag(int fanficTagId) {
-      return ctx.FanficTags.FirstOrDefault(x=>x.Id == fanficTagId);
+      return ctx.FanficTags.FirstOrDefault(x => x.Id == fanficTagId);
     }
 
     public List<FanficTag> GetFanficTags() {
       return ctx.FanficTags.ToList();
+    }
+
+    public void RemoveFanficTag(int fanficTagId) {
+      ctx.Remove(GetFanficTag(fanficTagId));
     }
   }
 }

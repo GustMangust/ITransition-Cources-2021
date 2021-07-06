@@ -12,6 +12,9 @@
 <body>
     
     <header>
+        <div>
+            @await Html.PartialAsync("_SelectLanguagePartial")
+        </div>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CourceProject</a>
@@ -22,32 +25,32 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 
                     @if(User.Identity.IsAuthenticated) {
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AllFanfics">Фанфики</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AddFanfic">Создать фанфик</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="UserFanfics">Мои фанфики</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="UserSettings">Аккаунт</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="UserBookmarks">Мои закладки</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
-                        </li>
-                        @if(User.IsInRole("Admin")) {
+                        <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminPage">Админка</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AllFanfics">Фанфики</a>
                             </li>
-                        }
-                    </ul>
-                    }else {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AddFanfic">Создать фанфик</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="UserFanfics">Мои фанфики</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="UserSettings">Аккаунт</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="UserBookmarks">Мои закладки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
+                            @if(User.IsInRole("Admin")) {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminPage">Админка</a>
+                                </li>
+                            }
+                        </ul>
+                    } else {
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Fanfic" asp-action="AllFanfics">Фанфики</a>
@@ -65,13 +68,14 @@
         </nav>
     </header>
     <div class="container">
-    <form method="post">
-        <input class="custom-select" name="text"/>
-        <input type="submit" asp-action="Search" asp-controller="Fanfic" value="Поиск" class="badge-light"/>
-    </form>
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+        <form method="post">
+            <input class="custom-select" name="text"/>
+            <input type="submit" asp-action="Search" asp-controller="Fanfic" value="Поиск" class="badge-light"/>
+        </form>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
     </div>
 
     <footer class="border-top footer text-muted">

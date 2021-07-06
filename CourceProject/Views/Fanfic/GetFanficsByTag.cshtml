@@ -1,0 +1,11 @@
+﻿@model (List<Fanfic> fanfics, List<Fandom> fandoms)
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@foreach(Fanfic f in Model.fanfics) {
+    <span>@f.Title</span>
+    <span>@f.Description</span>
+    <span>@Model.fandoms.FirstOrDefault(x => x.Id == f.Fandom_Id).Name</span>
+    <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Id">Подробнее</a>
+    <hr />
+}

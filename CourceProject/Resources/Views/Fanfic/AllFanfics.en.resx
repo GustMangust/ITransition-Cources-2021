@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EmailRequired" xml:space="preserve">
-    <value>Введите электронную почту</value>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
   </data>
-  <data name="PasswordRequired" xml:space="preserve">
-    <value>Введите пароль</value>
+  <data name="TopRating" xml:space="preserve">
+    <value>Top 5 by rating</value>
   </data>
-  <data name="UsernameRequired" xml:space="preserve">
-    <value>Введите имя пользователя</value>
+  <data name="TopUpdated" xml:space="preserve">
+    <value>Last 5 updated</value>
   </data>
 </root>

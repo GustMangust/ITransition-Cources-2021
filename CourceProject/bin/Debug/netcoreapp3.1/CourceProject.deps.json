@@ -310,6 +310,9 @@
           "CourceProject.dll": {}
         },
         "resources": {
+          "en/CourceProject.resources.dll": {
+            "locale": "en"
+          },
           "ru/CourceProject.resources.dll": {
             "locale": "ru"
           }

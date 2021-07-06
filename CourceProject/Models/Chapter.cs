@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CourceProject.Models {
+﻿namespace CourceProject.Models {
   public class Chapter {
     public int Id { get; set; }
     public string Title { get; set; }

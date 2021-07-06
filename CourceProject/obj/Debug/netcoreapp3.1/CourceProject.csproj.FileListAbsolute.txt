@@ -175,8 +175,6 @@ D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Microsoft.
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\ru\CourceProject.resources.dll
-D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.Resources.Resources.resources
-D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.Resources.Resources.ru.resources
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.csproj.GenerateResource.cache
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\ru\CourceProject.resources.dll
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\RestSharp.dll
@@ -229,3 +227,9 @@ D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Scripts\dr
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Scripts\dropzone-5.7.0\component.json
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Scripts\dropzone-5.7.0\composer.json
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Scripts\dropzone-5.7.0\package.json
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Fanfic\GetFanficsByTag.cshtml.g.cs
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_SelectLanguagePartial.cshtml.g.cs
+D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\en\CourceProject.resources.dll
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.Resources.Views.Fanfic.AllFanfics.en.resources
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.Resources.Views.Fanfic.AllFanfics.ru.resources
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\en\CourceProject.resources.dll

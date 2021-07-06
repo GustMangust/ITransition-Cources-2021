@@ -1,36 +1,44 @@
-﻿    <div>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+<div>
     @{
-      <img src="https://res.cloudinary.com/gustmangust/image/upload/v1625402318/my_id2.jpg" height="500" width="500"/>
-      Dictionary<Fanfic, Decimal> dict = new Dictionary<Fanfic, decimal>(ViewBag.Fanfics);
-      List<Fandom> fandoms = ViewBag.Fandoms;
-      <h3>Top 5 Rating</h3>
-        foreach(KeyValuePair<Fanfic, decimal> f in dict.OrderByDescending(x => x.Value).Take(5).ToList()) {
-                <span>@f.Key.Title</span>
-                <span>@f.Key.Description</span>
-                <span>@fandoms.FirstOrDefault(x=>x.Id == f.Key.Fandom_Id).Name</span>
-                <span>@f.Value</span>
-                <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
-                <hr />
+        <h3>
+            @Localizer["Tags"]
+        </h3>
+        @foreach(Tag tag in ViewBag.Tags) {
+            <a asp-action="GetFanficsByTag" asp-controller="Fanfic" asp-route-tagId="@tag.Id">@tag.Name</a>
         }
-        <h3>Top 5 Updated</h3>
+        Dictionary<Fanfic, Decimal> dict = new Dictionary<Fanfic, decimal>(ViewBag.Fanfics);
+        List<Fandom> fandoms = ViewBag.Fandoms;
+        <h3>@Localizer["TopRating"]</h3>
+        foreach(KeyValuePair<Fanfic, decimal> f in dict.OrderByDescending(x => x.Value).Take(5).ToList()) {
+            <span>@f.Key.Title</span>
+            <span>@f.Key.Description</span>
+            <span>@fandoms.FirstOrDefault(x => x.Id == f.Key.Fandom_Id).Name</span>
+            <span>@f.Value</span>
+            <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
+            <hr />
+        }
+        <h3>@Localizer["TopUpdated"]</h3>
         foreach(KeyValuePair<Fanfic, decimal> f in dict.OrderByDescending(x => x.Key.UpdateDate).Take(5).ToList()) {
-                <span>@f.Key.Title</span>   
-                <span>@f.Key.Description</span>
-                <span>@fandoms.FirstOrDefault(x => x.Id == f.Key.Fandom_Id).Name</span>
-                <span>@f.Value</span>
-                <span>@f.Key.UpdateDate</span>
-                <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
-                <hr />
+            <span>@f.Key.Title</span>
+            <span>@f.Key.Description</span>
+            <span>@fandoms.FirstOrDefault(x => x.Id == f.Key.Fandom_Id).Name</span>
+            <span>@f.Value</span>
+            <span>@f.Key.UpdateDate</span>
+            <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
+            <hr />
         }
         <h3>All fanfics by your preferences</h3>
         foreach(KeyValuePair<Fanfic, decimal> f in dict) {
-                <span>@f.Key.Title</span>
-                <span>@f.Key.Description</span>
-                <span>@fandoms.FirstOrDefault(x => x.Id == f.Key.Fandom_Id).Name</span>
-                <span>@f.Value</span>
-                <span>@f.Key.UpdateDate</span>
-                <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
-                <hr />
+            <span>@f.Key.Title</span>
+            <span>@f.Key.Description</span>
+            <span>@fandoms.FirstOrDefault(x => x.Id == f.Key.Fandom_Id).Name</span>
+            <span>@f.Value</span>
+            <span>@f.Key.UpdateDate</span>
+            <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
+            <hr />
         }
 
     }

@@ -10,18 +10,21 @@
                 <input type="submit" class="bg-light" value="Изменить никнейм" formaction="EditUsername" />
             </form>
         </div>
-        <div>
-            <span>Мои предпочтения:</span>
-                @foreach(Preference p in ViewBag.Preferences) {
-                <div>
+        @if(!User.IsInRole("Admin")) {
+            <div>
+        
+                <span>Мои предпочтения:</span>
+                    @foreach(Preference p in ViewBag.Preferences) {
+                    <div>
 
-                @foreach(Fandom fandom in ViewBag.Fandoms) {
-                    if(fandom.Id == p.FandomId) {
-                        <span>@fandom.Name</span>
+                    @foreach(Fandom fandom in ViewBag.Fandoms) {
+                        if(fandom.Id == p.FandomId) {
+                            <span>@fandom.Name</span>
+                        }
                     }
-                }
-                </div>
-                }
-                <a asp-controller="Account" asp-action="SetPreferences">Изменить предпочтения</a>
-        </div>
+                    </div>
+                    }
+                    <a asp-controller="Account" asp-action="SetPreferences">Изменить предпочтения</a>
+            </div>
+        }
     </div>

@@ -25,6 +25,7 @@ namespace CourceProject.Data.Repository {
     void AddFanficTag(FanficTag fanficTag);
     FanficTag GetFanficTag(int fanficTagId);
     List<FanficTag> GetFanficTags();
+    void RemoveFanficTag(int fanficTagId);
     Task<bool> SaveChangesAsync();
     List<Comment> GetFanficComments(int fanficId);
     List<Comment> GetAllComments();
