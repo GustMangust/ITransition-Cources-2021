@@ -1,7 +1,6 @@
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\web.config
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\appsettings.Development.json
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\appsettings.json
-D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\CourceProject.StaticWebAssets.xml
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\CourceProject.exe
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
@@ -49,7 +48,6 @@ D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\runtimes\w
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.csprojAssemblyReference.cache
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.RazorAssemblyInfo.cache
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.RazorAssemblyInfo.cs
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.AssemblyInfoInputs.cache
@@ -233,3 +231,5 @@ D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\en\CourceP
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.Resources.Views.Fanfic.AllFanfics.en.resources
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.Resources.Views.Fanfic.AllFanfics.ru.resources
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\en\CourceProject.resources.dll
+D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.csprojAssemblyReference.cache
