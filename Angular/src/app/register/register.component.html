@@ -1,0 +1,24 @@
+<div class="registration-dialog-wrapper">
+  <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+    <h4>Регистрация</h4>
+    <mat-form-field>
+      <mat-label>Имя</mat-label>
+      <input matInput [formControl]="username">
+
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Электронная почта</mat-label>
+      <input type="email" matInput [formControl]="email" placeholder="ivan@ivanov.com">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Введите пароль</mat-label>
+      <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+  <button mat-raised-button mat-dialog-close color="primary" (click)="submitForm()" class="button" [disabled]="!registerForm.valid">Создать аккаунт</button>
+</div>
+

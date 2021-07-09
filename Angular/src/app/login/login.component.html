@@ -1,0 +1,14 @@
+<form class="example-form" #myForm>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Email</mat-label>
+    <input #email matInput  class="mat-form-input">
+  </mat-form-field>
+  <p>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput  #password class="mat-form-input">
+    </mat-form-field>
+  </p>
+  <h2 style="color:white; float: right">{{loginResult}}</h2>
+  <button type="submit" (click)="login(email.value,password.value)" mat-raised-button>Log In</button>
+</form>

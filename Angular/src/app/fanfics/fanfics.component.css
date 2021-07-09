@@ -1,0 +1,22 @@
+.example-card {
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mat-selection-list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+
+}
+.mat-list-item{
+  margin: 70px auto;
+}
+.mat-card-flat{
+
+}
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
