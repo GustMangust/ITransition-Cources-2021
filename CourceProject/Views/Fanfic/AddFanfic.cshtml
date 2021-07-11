@@ -1,41 +1,41 @@
 ﻿@model CourceProject.ViewModel.AddFanficViewModel
 @{
 }
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CourceProject</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - CourceProject</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css"  />
+        <link type="text/css" rel="stylesheet" href="~/css/add-fanfic.css"  />
+    </head>
 
-<div class="row">
-    <div class="col-md-12">
+<div class="row justify-content-md-center" style="margin-top:40px">
+
+    <div class="fanfic-block col-md-auto">
         <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label>Title</label>
+                <h5 class="input-text">Title</h5>
                 <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label>Description</label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <h5 class="input-text">Description</h5>
+                <textarea asp-for="Description" class="form-control"></textarea>
             </div>
             <div class="form-group">
-                <label>Fandom</label>
+                <h5 class="input-text">Fandom</h5>
                 @Html.DropDownListFor(model => model.FandomId, ViewBag.Id as SelectList)
             </div>
             <div class="form-group">
-                <label>Tags. Example: "tagname1 tagname2 tagname3"</label>
+                <h5 class="input-text">Tags. Example: "tagname1 tagname2 tagname3"</h5>
                 <input asp-for="Tags" class="form-control" />
             </div>
             @if(User.IsInRole("Admin") && !String.IsNullOrEmpty(@ViewBag.UserId)) {
-                <input name="userId" value="@ViewBag.UserId" type="hidden"/>
+                <input name="userId" value="@ViewBag.UserId" type="hidden" />
             }
-            <button type="submit" class="btn-primary">Add</button>
+            <button type="submit" class="material-icons chapter-add button-hover add-fanfic">add_circle</button>
         </form>
     </div>
 </div>

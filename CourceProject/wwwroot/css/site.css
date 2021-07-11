@@ -1,14 +1,59 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+@font-face {
+    font-family: "charter";
+    src: url("../../Fonts/charter/ttf/Charter Regular.ttf") format("ttf")
+}
+@font-face {
+    font-family: "charter-bold";
+    src: url("../../Fonts/charter/ttf/Charter Bold.ttf") format("ttf")
+}
+
 * {
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    text-align: center;
+    color: #C5AFAF;
+    margin: 40px 0;
+}
+.body-container{
+    min-height:100vh;
 }
 .container {
-    background-color: #5e6668;
+    background-color: rgba(110, 48, 75, .7);
 }
 .header-container {
-    background-color: #d49c6b;
+    background-color: #997CA3;
+}
+.search-form {
+    display: flex;
+    margin: 20px 0 0px 0;
+    width:606px;
+}
+.search-button {
+    background-color: #f2f1ef;
+    border: none;
+    height: 40px;
+    padding: 4px;
+    width: 6%;
+}
+.loope{
+    margin-top:4px;
+}
+.search-input {
+    background-color: #f2f1ef;
+    border: none;
+    outline: none;
+    height: 40px;
+    padding: 4px 8px;
+    width:86%;
+    margin-left:4%
+    
 }
 a.navbar-brand {
   white-space: normal;
@@ -16,23 +61,27 @@ a.navbar-brand {
   word-break: break-all;
 }
 .navbar {
-    background-color:#d49c6b;
+    background-color: #997CA3;
 }
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #6e304b;
 }
-
+    a:hover {
+        color: #22161c;
+    }
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-
+a.nav-link {
+    font-family: "Roboto";
+}
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
@@ -72,8 +121,12 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    background-color: #252b31;
+    background-image: url(back.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
     margin-bottom: 60px;
+
 }
 .footer {
   position: absolute;

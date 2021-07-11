@@ -148,7 +148,6 @@ namespace CourceProject.Controllers {
     public async Task<IActionResult> SetPreferences(Preference preference) {
       preference.UserId = User.Identity.GetUserId();
       if(ctx.GetPreferences(User.Identity.GetUserId()).FirstOrDefault(x => x.FandomId == preference.FandomId) == null) {
-        Debug.WriteLine("Cool");
         ctx.AddPreference(preference);
 
       }

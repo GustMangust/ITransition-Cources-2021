@@ -1,0 +1,12 @@
+﻿.card-text{
+    font-family: 'charter';
+}
+.like-button{
+    float:right;
+}
+.navigation-arrow {
+    color: #C5AFAF;
+    font-size: 30px;
+    margin: 3px;
+    float: right;
+}

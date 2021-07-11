@@ -2,7 +2,8 @@
 
 @inject IViewLocalizer Localizer
 <head>
-    <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css"/>
+    
 </head>
     @{
 
@@ -18,13 +19,9 @@
             @foreach(KeyValuePair<Fanfic, decimal> f in dict.OrderByDescending(x => x.Value).Take(5).ToList()) {
                 <div class="card" style="width: 36rem;">
                     <div class="card-body">
-                        <h5 class="card-title">@f.Key.Title</h5>
+                        <h4 class="card-title">@f.Key.Title<div class="rating">@f.Value<span class="material-icons star-rate">star_rate</span></div></h4> 
                         <h6 class="card-subtitle mb-2 text-muted">@fandoms.FirstOrDefault(x => x.Id == f.Key.Fandom_Id).Name</h6>
-                        <div class="card-subtitle mb-2 text-muted">
-                            <h6>@f.Value<span class="material-icons">star_rate</span></h6>
-                        </div>
-                        <p class="card-text">@f.Key.Description</p>
-                        <a asp-controller="Fanfic" class="card-link" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
+                        <div class="card-text"><div class="fanfic-description">@f.Key.Description</div> <a asp-controller="Fanfic" class="card-link" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a></div>
                     </div>
                 </div>
             }
@@ -32,11 +29,9 @@
             @foreach(KeyValuePair<Fanfic, decimal> f in dict.OrderByDescending(x => x.Key.UpdateDate).Take(5).ToList()) {
                 <div class="card" style="width: 36rem;">
                     <div class="card-body">
-                        <h5 class="card-title">@f.Key.Title</h5>
+                        <h4 class="card-title">@f.Key.Title<div class="rating">@f.Value<span class="material-icons star-rate">star_rate</span></div></h4>
                         <h6 class="card-subtitle mb-2 text-muted">@fandoms.FirstOrDefault(x => x.Id == f.Key.Fandom_Id).Name</h6>
-                        <h6 class="card-subtitle mb-2 text-muted">@f.Value</h6>
-                        <p class="card-text">@f.Key.Description</p>
-                        <a asp-controller="Fanfic" class="card-link" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
+                        <div class="card-text"><div class="fanfic-description">@f.Key.Description</div> <a asp-controller="Fanfic" class="card-link" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a></div>
                     </div>
                 </div>
             }
@@ -44,11 +39,9 @@
             @foreach(KeyValuePair<Fanfic, decimal> f in dict) {
                 <div class="card" style="width: 36rem;">
                     <div class="card-body">
-                        <h5 class="card-title">@f.Key.Title</h5>
+                        <h4 class="card-title">@f.Key.Title<div class="rating">@f.Value<span class="material-icons star-rate">star_rate</span></div></h4>
                         <h6 class="card-subtitle mb-2 text-muted">@fandoms.FirstOrDefault(x => x.Id == f.Key.Fandom_Id).Name</h6>
-                        <h6 class="card-subtitle mb-2 text-muted">@f.Value</h6>
-                        <p class="card-text">@f.Key.Description</p>
-                        <a asp-controller="Fanfic" class="card-link" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a>
+                        <div class="card-text"><div class="fanfic-description">@f.Key.Description</div> <a asp-controller="Fanfic" class="card-link" asp-action="FanficDetails" asp-route-id="@f.Key.Id">Подробнее</a></div>
                     </div>
                 </div>
             }

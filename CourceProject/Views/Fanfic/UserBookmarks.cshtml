@@ -2,23 +2,28 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<div>
-    @{
-        foreach(Fanfic f in Model.fanfics) {
-        <form method="post">
-            
-            <span>@f.Title</span>
-            <span>@f.Description</span>
-            @foreach(Fandom fandom in Model.fandoms) {
-                if(fandom.Id == f.Fandom_Id) {
-                    <span>@fandom.Name</span>
-                }
+    <head>
+        <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" media="all" />
+
+    </head>
+    <div class="row justify-content-md-center" style="margin-top:40px">
+
+        <div class="col-md-auto">
+            @foreach(Fanfic f in Model.fanfics) {
+                <form method="post">
+                    <div class="card" style="width: 36rem;">
+                        <div class="card-body">
+                            <h4 class="card-title">@f.Title</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">@Model.fandoms.FirstOrDefault(x => x.Id == f.Fandom_Id).Name</h6>
+                            <form method="post" class="card-text">
+                                <div class="fanfic-description">@f.Description</div>
+                                <a asp-controller="Fanfic" class="card-link" asp-action="FanficDetails" asp-route-id="@f.Id">Подробнее</a>
+                                <input type="hidden" name="fanficId" value="@f.Id"/>
+                                <button type="submit" class="delete-button material-icons card-link button-hover"  formaction="RemoveBookmark" >delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </form>
             }
-            <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Id">Подробнее</a>
-            <input name="fanficId" value="@f.Id" type="hidden"/>
-            <input type="submit" class="bg-dark" value="удолить" formaction="RemoveBookmark"/>
-        </form>
-            <hr />
-        }
-    }
-</div>
+        </div>
+        </div>

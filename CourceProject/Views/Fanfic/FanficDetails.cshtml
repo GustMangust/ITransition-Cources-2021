@@ -1,78 +1,95 @@
 ﻿@using Microsoft.AspNetCore.Identity;
-@model (Fanfic fanfic, Fandom fandom, List<Chapter> chapters, List<Comment> comments, List<IdentityUser> users,decimal averageRating)
+@model (Fanfic fanfic, Fandom fandom, List<Chapter> chapters, List<Comment> comments, List<IdentityUser> users, decimal averageRating)
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-    <div>
-        <div>
-            <span>@Model.fanfic.Title</span>
-            <span>@Model.fanfic.Description</span>
-            <span>@Model.fandom.Name</span>
-            @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
-                <a asp-controller="Fanfic" asp-action="EditFanfic" asp-route-id="@Model.fanfic.Id">Изменить детали</a>
-            }
-        </div>
-        @foreach(Chapter c in Model.chapters) {
-            <form action="" method="post">
-                <div>
-                    @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
-                        <input type="submit" value="Up" formaction="../ChapterUp" />
-                        <input type="submit" value="Down" formaction="../ChapterDown" />
-                    }
-                    <img src="@c.ImageUrl" width="50" height="50"/>
-                    <span>Глава @c.Number :</span>
-                    <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-id="@c.Id">@c.Title</a>
-                    <span>@c.Body</span>
-                    @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
-                        <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@c.Id">Изменить главу</a>
-                        <input type="submit" value="Удалить главу" formaction="../RemoveChapter" />
-                    }
-                    <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-chapterId="@c.Id">Читать главу</a>
-                    <input type="hidden" name="id" value="@c.Id" />
+    <head>
+        <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css"/>
+
+    </head>
+<div style="margin-top:40px" class="row justify-content-md-center">
+    <div class="fanfic-block col-md-auto">
+        <div class="card" style="width: 48rem;">
+            <div class="card-body">
+                <h4 class="card-title">@Model.fanfic.Title<div class="rating">@Model.averageRating<span class="material-icons star-rate">star_rate</span></div></h4>
+                <h6 class="card-subtitle mb-2 text-muted">@Model.fandom.Name</h6>
+                <div class="card-text">
+                    <div class="fanfic-description">@Model.fanfic.Description</div>
+                    <form method="post" class="card-link">
+
+                        @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
+                            <a asp-controller="Fanfic" class="card-link material-icons" asp-action="EditFanfic" asp-route-id="@Model.fanfic.Id">edit</a>
+
+                        }
+                        @if(User.Identity.IsAuthenticated) {
+
+                            <input type="hidden" name="fanficId" value="@Model.fanfic.Id" />
+                            <button type="submit" class="card-link material-icons button-hover" formaction="../AddFanficToFavourite">bookmark_add</button>
+
+                        }
+                    </form>
                 </div>
-            </form>
-        }
-        @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
-            <a asp-controller="Fanfic" asp-action="AddChapter" asp-route-id="@Model.fanfic.Id">Добавить главу</a>
-        }
-        <div>Оценка: @Model.averageRating</div>
-        <div> Комменты:</div>
-        @foreach(Comment c in Model.comments) {
-            <div>
-                @foreach(IdentityUser u in Model.users) {
-                    if(c.User_Id == u.Id && c.Fanfic_Id == Model.fanfic.Id) {
-                        <div>Никнейм: @u.UserName</div>
-                    }
-                }
-                <div>@c.Body</div>
             </div>
+        </div> 
+        <h3>Главы:</h3>
+    <div class="chapters-block">
+    @foreach(Chapter c in Model.chapters) {
+                <form action="" method="post">
+        <div class="card" style="width: 48rem;">
+            <div class="card-body">
+                    <h4 class="card-title">
+                        Глава @c.Number: @c.Title
+                    </h4>
+
+                        @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
+                            <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@c.Id" class="material-icons card-link chapter-management__link">edit</a>
+                            <button type="submit" formaction="../RemoveChapter" class="material-icons button-hover card-link chapter-management__link">delete</button>
+                        }
+                        <a asp-controller="Fanfic" asp-action="ChapterDetails" asp-route-chapterId="@c.Id" class="material-icons button-hover card-link chapter-management__link">auto_stories</a>
+                        @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
+                            <button type="submit"  formaction="../ChapterUp" class="material-icons button-hover card-link chapter-management__link">arrow_upward</button>
+                            <button type="submit"  formaction="../ChapterDown" class="material-icons button-hover card-link chapter-management__link">arrow_downward</button>
+                        }
+                        <input type="hidden" name="id" value="@c.Id" />
+            </div>
+        </div>
+                </form>
+            }
+    @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
+        <a asp-controller="Fanfic" asp-action="AddChapter" class="material-icons chapter-add" asp-route-id="@Model.fanfic.Id">add_circle</a>
+    }
+    <h3> Комментарии:</h3>
+
+    @foreach(Comment c in Model.comments) {
+    <div class="card" style="width: 48rem;">
+        <div class="card-body">
+            <h4 class="card-title"> Пользователь @Model.users.FirstOrDefault(x => x.Id == c.User_Id && c.Fanfic_Id == Model.fanfic.Id).UserName</h4>
+            <div class="card-text">
+                <div class="fanfic-description">@c.Body</div>
+            </div>
+            </div>
+        </div>
         }
         @if(User.Identity.IsAuthenticated) {
-            <form method="post">
-                <textarea name="text"></textarea>
+            <form method="post" class="comment-block">
+                <textarea name="text" class="comment-textarea"></textarea>
                 <input type="hidden" name="fanficId" value="@Model.fanfic.Id" />
-                <input type="submit" class="btn-primary" formaction="../AddComment" />
+                <button type="submit" class="comment-button" formaction="../AddComment">Добавить</button>
+            </form>
+            <h3>Оценить:</h3>
+            <form method="post" class="rating-block">
+                <label class="radio-inline"><input type="radio" class="radio-button" name="mark" value="1">1</label>
+                <label class="radio-inline"><input type="radio" class="radio-button" name="mark" value="2">2</label>
+                <label class="radio-inline"><input type="radio" class="radio-button" name="mark" value="3">3</label>
+                <label class="radio-inline"><input type="radio" class="radio-button" name="mark" value="4">4</label>
+                <label class="radio-inline"><input type="radio" class="radio-button" name="mark" value="5" checked>5</label>
+                <input type="hidden" name="fanficId" value="@Model.fanfic.Id" />
+                <button class="rating-button" formaction="../AddRating" type="submit">Оценить</button>
             </form>
             <form method="post">
-                <input name="mark" type="radio" value="1" />
-                <span>1</span> <br />
-                <input name="mark" type="radio" value="2" />
-                <span>2</span> <br />
-                <input name="mark" type="radio" value="3" />
-                <span>3</span>
-                <input name="mark" type="radio" value="4" />
-                <span>4</span>
-                <input checked="checked" name="mark" type="radio" value="5" />
-                <span>5</span>
-                <input type="hidden" name="fanficId" value="@Model.fanfic.Id" />
-                <p>
-                    <input class="btn-primary" formaction="../AddRating" type="submit" value="Отправить" />
-                </p>
-            </form>
-            <form method="post">
-                <input type="hidden" name="fanficId" value="@Model.fanfic.Id" />
-                <input type="submit" class="badge-danger" value="В закладки" formaction="../AddFanficToFavourite" />
+               
             </form>
         }
-
     </div>
+    </div>
+</div>

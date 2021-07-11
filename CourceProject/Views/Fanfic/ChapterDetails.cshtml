@@ -1,24 +1,31 @@
 ﻿@model (Chapter chapter,int likes)
-<div>
-    <div>
-        <span>Глава @Model.chapter.Number :</span>
-        <span>@Model.chapter.Title</span>
-        <span>@Model.chapter.Body</span>
-        @if(User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == ViewBag.Id) {
-            <a asp-controller="Fanfic" asp-action="EditChapter" asp-route-id="@Model.chapter.Id">Изменить главу</a>
-        }
-        <br />
-    <a asp-controller="Fanfic" asp-action="ChapterNavigate" asp-route-chapterId="@Model.chapter.Id" asp-route-param="Back">Back</a>
-    <a asp-controller="Fanfic" asp-action="ChapterNavigate" asp-route-chapterId="@Model.chapter.Id" asp-route-param="Forward">Forward</a>
-    </div>
-    <div>
-        <span>Всего лайков: @Model.likes</span>
-        @if(User.Identity.IsAuthenticated) {
-            <form method="post">
-                <input type="hidden" value="@Model.chapter.Id" name="chapterId" />
-                <input type="hidden" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" name="userId" />
-                <input type="submit" class="btn-primary" formaction="AddLike" />
-            </form>
-        }
+    <head>
+        <link type="text/css" rel="stylesheet" href="~/css/chapter-details.css" media="all" />
+        <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" media="all" />
+
+    </head>
+    <div class="row justify-content-md-center">
+
+        <div class="fanfic-block col-md-auto">
+            <div class="card" style="width: 48rem;">
+                <div class="card-body">
+                    <form method="post">
+                        <h4 class="card-title">
+                            <input type="hidden" value="@Model.chapter.Id" name="chapterId" />
+                            <input type="hidden" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" name="userId" />
+                            Глава @Model.chapter.Number: 
+                            @if(User.Identity.IsAuthenticated) {
+                                @Model.chapter.Title <span class="like-button">@Model.likes<button type="submit" formaction="AddLike" class="material-icons button-hover">thumb_up</button></span>
+                            }
+                        </h4>
+                    </form>
+                    <div class="card-text">
+                        @Model.chapter.Body
+                    </div>
+                </div>
+            </div>
+            <a asp-controller="Fanfic" asp-action="ChapterNavigate" asp-route-chapterId="@Model.chapter.Id" class="material-icons button-hover navigation-arrow" asp-route-param="Forward">arrow_forward</a>
+            <a asp-controller="Fanfic" asp-action="ChapterNavigate" asp-route-chapterId="@Model.chapter.Id" class="material-icons button-hover navigation-arrow" asp-route-param="Back">arrow_back</a>
+            
         </div>
-</div>
+        </div>

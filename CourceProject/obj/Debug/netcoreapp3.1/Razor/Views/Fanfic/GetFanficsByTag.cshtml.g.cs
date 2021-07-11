@@ -27,7 +27,7 @@ using CourceProject.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"dae9e498da8a1e2aaa5f7bb57ac87d393359660c", @"/Views/Fanfic/GetFanficsByTag.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"307764b4af1380302c3dedab7455d06c51c75054", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ffa95d065607b175f73a0fd3997d46672bef3fb7", @"/Views/_ViewImports.cshtml")]
     public class Views_Fanfic_GetFanficsByTag : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<(List<Fanfic> fanfics, List<Fandom> fandoms)>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "Fanfic", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);

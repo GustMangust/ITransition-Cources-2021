@@ -1,14 +1,97 @@
-﻿* {
-     
+﻿*{
 }
-.all-block{
+.fanfic-description {
+    width: 70%;
 }
-.fanfic-block {
+.card-text{
+    display:flex;
+    justify-content:space-between;
 }
-.tag-block {
-    
+.card-title {
+    margin-bottom: 0.75em;
+    overflow-wrap: break-word;
+}
+.rating{
+ float:right;
+ margin-right:5px;
+}
+.star-rate {
+    font-size: 20px;
+    color: #e2ae6c;
+}
+.card-link{
+    align-self:flex-end;
+    float:right;
+}
+.card-link{
+    margin-left:13px !important;
+    padding: 0 !important;
 }
 .card {
-    margin: 20px 0 20px 0;
-    background-color: #c1c8c7;
+    margin: 20px auto 20px auto;
+    background-color: #f2f1ef;
+}
+.delete-button{
+ border:none;
+}
+.chapters-block {
+    display: flex;
+    flex-direction: column;
+    width: 48rem;
+    margin: 0 auto;
+    justify-content: space-evenly;
+}
+.chapter-block{
+    display:inline-block;
+}
+a.material-icons:hover{
+    text-decoration:none;
+}
+button.material-icons {
+    background: none;
+    border: none;
+    color: #6e304b;
+    outline:none;
+}
+.button-hover:hover {
+    color: #22161c !important;
+}
+.comment-textarea {
+    width: 48rem;
+    height: 16rem;
+    outline: none;
+    padding: 8px;
+    resize: none;
+}
+h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    color: #C5AFAF;
+    margin: 40px 0 20px 0;
+}
+.comment-button{
+    border: solid 1px white;
+    outline:none;
+    border-radius: 3px;
+    float:right;
+}
+.rating-button {
+    border: solid 1px white;
+    outline: none;
+    border-radius: 3px;
+}
+.radio-inline {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    color: #C5AFAF;
+    margin-right:10px;
+}
+.radio-button{
+    margin-right: 3px;
+}
+.chapter-add {
+    color: #C5AFAF;
+    font-size:30px;
+    margin: 3px;
+    text-align:right;
 }

@@ -88,7 +88,6 @@ namespace CourceProject.Controllers {
         stringBuilder.Append(ctx.GetTag(tag.TagId).Name + " ");
       }
       ViewBag.Tags = stringBuilder.ToString();
-
       ViewData["Id"] = new SelectList(ctx.GetAllFandoms(), "Id", "Name");
       return View();
     }
@@ -216,6 +215,9 @@ namespace CourceProject.Controllers {
     }
     [HttpPost]
     public ActionResult Search(string text) {
+      if(String.IsNullOrWhiteSpace(text)) {
+        return LocalRedirect(Request.Path.ToString());
+      }
       const LuceneVersion AppLuceneVersion = LuceneVersion.LUCENE_48;
       var basePath = Environment.GetFolderPath(
           Environment.SpecialFolder.CommonApplicationData);
@@ -303,8 +305,12 @@ namespace CourceProject.Controllers {
       fanfic.Fandom_Id = fanficVM.FandomId;
       fanfic.User_Id = fanficVM.UserId;
       ctx.UpdateFanfic(fanfic);
+
       List<Tag> tags = ctx.GetAllTags();
-      List<string> newTags = fanficVM.Tags.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
+      List<string> newTags = new List<string>();
+      if(!String.IsNullOrEmpty(fanficVM.Tags)) {
+         newTags = fanficVM.Tags.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
+      }
       foreach(FanficTag fanficTag in ctx.GetFanficTags().Where(x => x.FanficId == fanficVM.Id)) {
         if(!newTags.Contains(ctx.GetTag(fanficTag.Id).Name)) {
           ctx.RemoveFanficTag(fanficTag.Id);

@@ -27,7 +27,7 @@ using CourceProject.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"721c1e34a1cdeae925ad40775f3d4956e03e3eeb", @"/Views/Fanfic/EditChapter.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"307764b4af1380302c3dedab7455d06c51c75054", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ffa95d065607b175f73a0fd3997d46672bef3fb7", @"/Views/_ViewImports.cshtml")]
     public class Views_Fanfic_EditChapter : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<Chapter>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("rel", new global::Microsoft.AspNetCore.Html.HtmlString("stylesheet"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);

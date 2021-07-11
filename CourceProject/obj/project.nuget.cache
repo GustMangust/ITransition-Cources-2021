@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7yvmJc310wzgl2vWy7HNOGXYZU5iSI01GlPTjqbVV6ofanSPvmeclMDlf4KE5bNli+QPvD3WpU80JCbWs4jzQQ==",
+  "dgSpecHash": "uoUyCMzttFp+wDyNmh6HPnqhmS3Er6Ru3zYDMJQEf+k/IWmC235haKqisprrF8axN1RkPGqFDlkUSDbN0Wl9sA==",
   "success": true,
   "projectFilePath": "D:\\Git\\ITransition-Cources-2021\\CourceProject\\CourceProject.csproj",
   "expectedPackageFiles": [
@@ -131,6 +131,8 @@
     "C:\\Users\\GustMangust\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\GustMangust\\.nuget\\packages\\syncfusion.ej2.aspnet.core\\19.2.0.46\\syncfusion.ej2.aspnet.core.19.2.0.46.nupkg.sha512",
+    "C:\\Users\\GustMangust\\.nuget\\packages\\syncfusion.licensing\\19.2.0.46\\syncfusion.licensing.19.2.0.46.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\GustMangust\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",

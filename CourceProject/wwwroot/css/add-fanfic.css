@@ -1,0 +1,18 @@
+﻿.input-text {
+    color: #C5AFAF;
+    text-align:left;
+    font-weight:500;
+}
+select{
+    outline:none;
+    border-radius:3px;
+    font-size: 14px;
+}
+textarea.form-control {
+    height: 150px;
+    resize: none;
+}
+.add-fanfic {
+    color: #C5AFAF !important;
+    float: right;
+}
