@@ -235,3 +235,4 @@ D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProj
 D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\CourceProject.MvcApplicationPartsAssemblyInfo.cache
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Syncfusion.EJ2.dll
 D:\Git\ITransition-Cources-2021\CourceProject\bin\Debug\netcoreapp3.1\Syncfusion.Licensing.dll
+D:\Git\ITransition-Cources-2021\CourceProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\Confirmation.cshtml.g.cs

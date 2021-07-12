@@ -10,16 +10,21 @@
             <div class="card" style="width: 48rem;">
                 <div class="card-body">
                     <form method="post">
-                        <h4 class="card-title">
-                            <input type="hidden" value="@Model.chapter.Id" name="chapterId" />
+                    @if(Model.chapter.ImageUrl != null) {
+                        <img class="card-img-top" src="@Model.chapter.ImageUrl" style="margin-bottom:10px;" alt="Card image cap">
+                    }
+                    <h4 class="card-title">
+                        <input type="hidden" value="@Model.chapter.Id" name="chapterId" />
+                        @if(User.Identity.IsAuthenticated) {
                             <input type="hidden" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" name="userId" />
-                            Глава @Model.chapter.Number: 
-                            @if(User.Identity.IsAuthenticated) {
-                                @Model.chapter.Title <span class="like-button">@Model.likes<button type="submit" formaction="AddLike" class="material-icons button-hover">thumb_up</button></span>
-                            }
-                        </h4>
+                        }
+                        Глава @Model.chapter.Number:
+                        @if(User.Identity.IsAuthenticated) {
+                            @Model.chapter.Title <span class="like-button">@Model.likes<button type="submit" formaction="AddLike" class="material-icons button-hover">thumb_up</button></span>
+                        }
+                    </h4>
                     </form>
-                    <div class="card-text">
+                    <div class="card-text" style="text-align:justify">
                         @Model.chapter.Body
                     </div>
                 </div>

@@ -82,7 +82,11 @@ namespace CourceProject.Controllers {
     }
     [HttpGet]
     public IActionResult EditFanfic(int id) {
-      ViewBag.Fanfic = ctx.GetFanfic(id);
+      Fanfic fanfic = ctx.GetFanfic(id);
+      if(String.IsNullOrEmpty(fanfic.Description)) {
+        fanfic.Description = "";
+      }
+      ViewBag.Fanfic = fanfic;
       StringBuilder stringBuilder = new StringBuilder();
       foreach(FanficTag tag in ctx.GetFanficTags().Where(x => x.FanficId == id)) {
         stringBuilder.Append(ctx.GetTag(tag.TagId).Name + " ");
@@ -102,10 +106,25 @@ namespace CourceProject.Controllers {
         return RedirectToAction("SetPreferences", "Account");
       }
       List<Tag> tags = new List<Tag>();
+      Dictionary<Tag, string> tagCloud = new Dictionary<Tag, string>();
       foreach(FanficTag fanficTag in ctx.GetFanficTags()) {
-        tags.Add(ctx.GetAllTags().FirstOrDefault(x => x.Id == fanficTag.TagId));
+        string tagClass = "tag1";
+        if(ctx.GetFanficTags().Where(x => x.TagId == fanficTag.TagId).ToList().Count <= 0) {
+          tagClass = "tag1";
+        }else if(ctx.GetFanficTags().Where(x => x.TagId == fanficTag.TagId).ToList().Count <= 1) {
+          tagClass = "tag2";
+        }else if(ctx.GetFanficTags().Where(x => x.TagId == fanficTag.TagId).ToList().Count <= 2) {
+          tagClass = "tag3";
+        }else if(ctx.GetFanficTags().Where(x => x.TagId == fanficTag.TagId).ToList().Count <= 3) {
+          tagClass = "tag4";
+        }else if(ctx.GetFanficTags().Where(x => x.TagId == fanficTag.TagId).ToList().Count <= 4) {
+          tagClass = "tag5";
+        }
+        if(tagCloud.FirstOrDefault(x => x.Key.Id == fanficTag.TagId).Equals(new KeyValuePair<Tag, string>())) {
+          tagCloud.Add(ctx.GetAllTags().FirstOrDefault(x => x.Id == fanficTag.TagId), tagClass);
+        }
       }
-      ViewBag.Tags = tags.Distinct();
+      ViewBag.Tags = tagCloud.Distinct();
       List<Fanfic> fanfics = ctx.GetAllFanfics();
       Dictionary<Fanfic, decimal> allFanficRatings = new Dictionary<Fanfic, decimal>();
       foreach(Fanfic fan in fanfics) {
@@ -123,7 +142,6 @@ namespace CourceProject.Controllers {
           foreach(Preference pref in ctx.GetPreferences(User.Identity.GetUserId())) {
             if(pref.FandomId == fanficPair.Key.Fandom_Id) {
               userFanficRatings.Add(fanficPair.Key, fanficPair.Value);
-              Debug.WriteLine(fanficPair.Key.Title + " " + fanficPair.Value);
             }
           }
         }
@@ -178,6 +196,9 @@ namespace CourceProject.Controllers {
     }
     [HttpGet]
     public IActionResult SearchResult(string idList) {
+      if(String.IsNullOrEmpty(idList)) {
+        idList = "";
+      }
       List<Fanfic> fanfics = new List<Fanfic>();
       foreach(string str in idList.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)) {
         fanfics.Add(ctx.GetFanfic(Convert.ToInt32(str)));
@@ -215,9 +236,6 @@ namespace CourceProject.Controllers {
     }
     [HttpPost]
     public ActionResult Search(string text) {
-      if(String.IsNullOrWhiteSpace(text)) {
-        return LocalRedirect(Request.Path.ToString());
-      }
       const LuceneVersion AppLuceneVersion = LuceneVersion.LUCENE_48;
       var basePath = Environment.GetFolderPath(
           Environment.SpecialFolder.CommonApplicationData);
@@ -312,7 +330,7 @@ namespace CourceProject.Controllers {
          newTags = fanficVM.Tags.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
       }
       foreach(FanficTag fanficTag in ctx.GetFanficTags().Where(x => x.FanficId == fanficVM.Id)) {
-        if(!newTags.Contains(ctx.GetTag(fanficTag.Id).Name)) {
+        if(!newTags.Contains(ctx.GetTag(fanficTag.TagId).Name)) {
           ctx.RemoveFanficTag(fanficTag.Id);
         }
       }
@@ -326,11 +344,12 @@ namespace CourceProject.Controllers {
           await ctx.SaveChangesAsync();
           continue;
         }
-        if(ctx.GetFanficTags().Where(x => x.FanficId == fanficVM.Id && x.TagId == ctx.GetTagByName(tag).Id) == null) {
+        if(ctx.GetFanficTags().FirstOrDefault(x => x.FanficId == fanficVM.Id && x.TagId == ctx.GetTagByName(tag).Id) == null) {
           ctx.AddFanficTag(new FanficTag { FanficId = fanficVM.Id, TagId = ctx.GetTagByName(tag).Id });
           await ctx.SaveChangesAsync();
         }
       }
+      await ctx.SaveChangesAsync();
       return RedirectToAction("FanficDetails", "Fanfic", new { id = fanfic.Id });
     }
     [HttpPost]
@@ -417,10 +436,8 @@ namespace CourceProject.Controllers {
       if(fanfic != null) {
         ctx.AddBookmark(new Bookmark { FanficId = fanficId, UserId = User.Identity.GetUserId() });
       }
-      if(await ctx.SaveChangesAsync()) {
-        return RedirectToAction("UserBookmarks", "Fanfic");
-      }
-      return RedirectToAction("AllFanfics", "Fanfic");
+      await ctx.SaveChangesAsync();
+      return RedirectToAction("UserBookmarks", "Fanfic");
     }
     [HttpPost]
     public async Task<IActionResult> RemoveBookmark(int fanficId) {

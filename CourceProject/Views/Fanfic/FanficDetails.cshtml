@@ -16,16 +16,13 @@
                 <div class="card-text">
                     <div class="fanfic-description">@Model.fanfic.Description</div>
                     <form method="post" class="card-link">
-
                         @if(User.Identity.IsAuthenticated && (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value == Model.fanfic.User_Id) || User.IsInRole("Admin")) {
                             <a asp-controller="Fanfic" class="card-link material-icons" asp-action="EditFanfic" asp-route-id="@Model.fanfic.Id">edit</a>
 
                         }
                         @if(User.Identity.IsAuthenticated) {
-
                             <input type="hidden" name="fanficId" value="@Model.fanfic.Id" />
-                            <button type="submit" class="card-link material-icons button-hover" formaction="../AddFanficToFavourite">bookmark_add</button>
-
+                            <button type="submit" class="card-link material-icons button-hover" asp-action="AddFanficToFavourite" asp-controller="Fanfic">bookmark_add</button>
                         }
                     </form>
                 </div>
@@ -63,7 +60,15 @@
     @foreach(Comment c in Model.comments) {
     <div class="card" style="width: 48rem;">
         <div class="card-body">
-            <h4 class="card-title"> Пользователь @Model.users.FirstOrDefault(x => x.Id == c.User_Id && c.Fanfic_Id == Model.fanfic.Id).UserName</h4>
+            <h4 class="card-title"> Пользователь 
+            @{string commentText = "";  }
+            @if(!String.IsNullOrEmpty(c.User_Id)) {
+                commentText = Model.users.FirstOrDefault(x => x.Id == c.User_Id && c.Fanfic_Id == Model.fanfic.Id).UserName;
+            } else {
+                commentText = "deleted";
+            }
+            @commentText
+            </h4>
             <div class="card-text">
                 <div class="fanfic-description">@c.Body</div>
             </div>

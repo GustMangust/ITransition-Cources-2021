@@ -1,30 +1,57 @@
 ﻿@model Fandom
-    <div>
-        <label>Email: </label>
-        <span>@ViewBag.User.Email</span>
-        <div>
-            <form method="post">
-                <span>Username: </span>
-                <input value="@ViewBag.User.UserName" name="username" />
-                <input type="hidden" name="userId" value="@ViewBag.User.Id" />
-                <input type="submit" class="bg-light" value="Изменить никнейм" formaction="EditUsername" />
-            </form>
-        </div>
-        @if(!User.IsInRole("Admin")) {
-            <div>
-        
-                <span>Мои предпочтения:</span>
-                    @foreach(Preference p in ViewBag.Preferences) {
-                    <div>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/add-fanfic.css" />
+    </head>
+    <div class="row justify-content-md-center" style="margin-top:40px">
 
-                    @foreach(Fandom fandom in ViewBag.Fandoms) {
-                        if(fandom.Id == p.FandomId) {
-                            <span>@fandom.Name</span>
-                        }
-                    }
+        <div class="fanfic-block col-md-auto">
+            <div  style="margin: 0 auto;" >
+                <h5 class="input-text">@await Html.PartialAsync("_SelectLanguagePartial")</h5>
+                <h5 class="input-text">
+                    Email: @ViewBag.User.Email </h5>
+
+                    <form method="post">
+                        <div style="display:flex;">
+                            <h5 class="input-text">Username: <input value="@ViewBag.User.UserName" name="username" /></h5>
+                            <input type="hidden" name="userId" value="@ViewBag.User.Id" />
+                            <button type="submit" asp-controller="Account" class="material-icons add-fanfic button-hover" style="float:none; margin-bottom:7px;" asp-action="EditUsername">edit</button>
+                        </div>
+                    </form>
+                    <div>
+                        <a class="material-icons nav-link add-fanfic" style="float:none; margin:10px 0; font-size:20px; padding:0;" asp-controller="Fanfic" asp-action="UserFanfics">Мои фанфики</a>
+                        <a class="material-icons add-fanfic button-hover" style="float:none; padding:0;" asp-controller="Account" asp-action="Logout">logout</a>
                     </div>
-                    }
-                    <a asp-controller="Account" asp-action="SetPreferences">Изменить предпочтения</a>
             </div>
-        }
-    </div>
+
+            @if(!User.IsInRole("Admin")) {
+                <div style="margin: 0 auto;">
+
+                    <h2>Мои предпочтения <a asp-controller="Account" class="material-icons add-fanfic" style="float:none;" asp-action="SetPreferences">edit</a></h2>
+                    <div>
+                        @foreach(Preference p in ViewBag.preferences) {
+
+                            @foreach(Fandom fandom in ViewBag.fandoms) {
+                                if(fandom.Id == p.FandomId) {
+                                    <div class="card" style="width: 300px">
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                @fandom.Name
+                                                <input type="hidden" value="@p.Id" name="preferenceId" />
+                                            </h4>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        }
+                        
+                    </div>
+                </div>
+            }
+        </div>
+        </div>

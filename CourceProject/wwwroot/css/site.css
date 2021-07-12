@@ -18,14 +18,14 @@ h2 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 800;
     text-align: center;
-    color: #C5AFAF;
+    color: #e2ae6c;
     margin: 40px 0;
 }
 .body-container{
     min-height:100vh;
 }
 .container {
-    background-color: rgba(110, 48, 75, .7);
+    background-color: rgba(110, 48, 75, .5);
 }
 .header-container {
     background-color: #997CA3;
@@ -56,9 +56,10 @@ h2 {
     
 }
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-size: 20px !important;
 }
 .navbar {
     background-color: #997CA3;
@@ -68,7 +69,7 @@ a {
     color: #6e304b;
 }
     a:hover {
-        color: #22161c;
+        color: #22161c !important;
     }
 .btn-primary {
   color: #fff;
@@ -77,6 +78,7 @@ a {
 }
 a.nav-link {
     font-family: "Roboto";
+    font-size:16px;
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;

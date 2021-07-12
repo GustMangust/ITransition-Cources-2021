@@ -1,26 +1,28 @@
 ﻿@model CourceProject.ViewModel.EditFanficViewModel
     <head>
 
+
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/add-fanfic.css" />
         @section Scripts{
+            
             <script src="Scripts/jquery-3.6.0.js"></script>
             <script src="Scripts/jquery-3.6.0.min.js"></script>
             <script>
-                var a = document.getElementById("textarea");
-                a.innerHTML = '@ViewBag.Fanfic.Description';
+                $(document).ready(function () {
+                    var a = document.getElementById("textarea");
+
+                    a.innerHTML = '@ViewBag.Fanfic.Description';
+                });
             </script>
         }
-            <link rel="stylesheet" href="~/css/site.css" />
-            <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" />
-            <link type="text/css" rel="stylesheet" href="~/css/add-fanfic.css" />
-
+        
     </head>
-    @{ 
-      string text = @ViewBag.Fanfic.Description;
-    }
         <div class="row justify-content-md-center" style="margin-top:40px">
 
             <div class="fanfic-block col-md-auto">
-                <form method="post">
+                <form method="post" style="width:48rem">
                     <div class="form-group">
                         <h5 class="input-text">Title</h5>
                         <input asp-for="Title"  value="@ViewBag.Fanfic.Title" class="form-control" />

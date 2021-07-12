@@ -2,10 +2,29 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@foreach(Fanfic f in Model.fanfics) {
-    <span>@f.Title</span>
-    <span>@f.Description</span>
-    <span>@Model.fandoms.FirstOrDefault(x => x.Id == f.Fandom_Id).Name</span>
-    <a asp-controller="Fanfic" asp-action="FanficDetails" asp-route-id="@f.Id">Подробнее</a>
-    <hr />
-}
+<head>
+    <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" media="all" />
+    @section Scripts{
+        <script src="Scripts/jquery-3.6.0.js"></script>
+        <script src="Scripts/jquery-3.6.0.min.js"></script>
+        <script src="~/js/script.js">
+
+
+                //a.innerHTML = '';
+        </script>
+    }
+</head>
+<div class="row justify-content-md-center" style="margin-top:40px">
+
+    <div class="col-md-auto">
+        @foreach(Fanfic f in Model.fanfics) {
+            <div class="card" style="width: 36rem;">
+                <div class="card-body">
+                    <h4 class="card-title">@f.Title</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">@Model.fandoms.FirstOrDefault(x => x.Id == f.Fandom_Id).Name</h6>
+                    <div class="card-text"><div class="fanfic-description">@f.Description</div> <a asp-controller="Fanfic" class="card-link" asp-action="FanficDetails" asp-route-id="@f.Id">Подробнее</a></div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -30,6 +30,11 @@ namespace CourceProject.Controllers {
     public IActionResult Register() {
       return View();
     }
+    [HttpGet]
+    public IActionResult Confirmation() {
+      ViewBag.Text = "Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме";
+      return View();
+    }
     [HttpPost]
     public async Task<IActionResult> Register(RegisterViewModel model) {
       var roleResult = await _roleManager.CreateAsync(new IdentityRole("Admin"));
@@ -65,9 +70,8 @@ namespace CourceProject.Controllers {
           EmailService emailService = new EmailService();
           await emailService.SendEmailAsync(model.Email, "Confirm your account",
               $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
-
-          return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
-          //return RedirectToAction("Index", "Home");
+          
+          return RedirectToAction("Confirmation","Account");
         }
         foreach(var error in result.Errors) {
           ModelState.AddModelError("", error.Description);
@@ -110,8 +114,7 @@ namespace CourceProject.Controllers {
         }
         var result = await _signInManager.PasswordSignInAsync(user1.UserName, user.Password, user.RememberMe, false);
         if(result.Succeeded) {
-          if(ctx.GetPreferences(user1.Id).Count == 0) {
-            Debug.WriteLine(user1.Id);
+          if(ctx.GetPreferences(user1.Id).Count == 0 && User.IsInRole("User")) {
             return RedirectToAction("SetPreferences", "Account");
           }
           return RedirectToAction("AllFanfics", "Fanfic");

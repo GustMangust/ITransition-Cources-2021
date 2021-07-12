@@ -1,22 +1,44 @@
 ﻿@model List<IdentityUser>
 @using Microsoft.AspNetCore.Identity;
-@foreach(IdentityUser user in Model) {
-    <form method="post">
-    <span>Id: @user.Id</span>
-    <span>Email: @user.Email</span>
-    <span>UserName: @user.UserName</span>
-    @if(user.LockoutEnd == null) {
-    <span>Status: active</span>
-    } else {
-    <span>Status: blocked</span>
-    }
-    <br />
-    <input type="hidden" value="@user.Id" name="userId"/>
-    <input formaction="BlockUser" type="submit" value="Block" class="active"/>
-    <input formaction="UnblockUser" type="submit" value="Unblock" class="active"/>
-    <input formaction="DeleteUser" type="submit" value="Delete" class="active"/>
-    <input formaction="GiveAdmin" type="submit" value="Give Admin Rights" class="active"/>
-    </form>
-    <a asp-action="AddFanficAdmin" asp-controller="Admin"asp-route-userId="@user.Id">Create fanfic by this user</a>
-    <hr />
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/add-fanfic.css" />
+</head>
+@{ 
+  string text = "";
 }
+<div class="row justify-content-md-center">
+
+    <div class="fanfic-block col-md-auto">
+                @foreach(IdentityUser user in Model) {
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <div class="card-text" style="font-family:'Roboto';">
+                        Id: @user.Id
+                        Email: @user.Email
+                        UserName: @user.UserName
+                        @if(user.LockoutEnd == null) {
+                            text = "Status: active";
+                        } else {
+                            text = "Status: blocked";
+                        }
+                        @text
+                        <input type="hidden" value="@user.Id" name="userId" />
+                        <button formaction="BlockUser" type="submit"  class="material-icons add-fanfic button-hover">block</button>
+                        <button formaction="UnblockUser" type="submit" class="material-icons add-fanfic button-hover">check</button>
+                        <button formaction="DeleteUser" type="submit" class="material-icons add-fanfic button-hover">delete</button>
+                        <button formaction="GiveAdmin" type="submit" class="material-icons add-fanfic button-hover">admin_panel_settings</button>
+                        <a asp-action="AddFanficAdmin" asp-controller="Admin" asp-route-userId="@user.Id">Create fanfic by this user</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+                }
+    </div>
+</div>
+

@@ -1,26 +1,44 @@
 ﻿@model Preference
-    <div>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/add-fanfic.css" />
+</head>
+<div class="row justify-content-md-center" style="margin-top:40px">
 
+    <div class="col-md-auto">
         @{
-                <form method="post">
-                <label>Выберите фэндом (минимум один)</label>
-                    @Html.DropDownListFor(model => model.FandomId, ViewBag.Id as SelectList)
-                    <input class="badge-light" value="add" type="submit"/>
-                    <input class="badge-light" value="Submit" formaction="EndChangePreferences" type="submit"/>
-                    <div>
+            <form method="post">
+                <h2>Выберите фэндом (минимум один)</h2>
+            <div style="display:flex; justify-content:center;">
+                @Html.DropDownListFor(model => model.FandomId, ViewBag.Id as SelectList)
+                <button class="material-icons button-hover add-fanfic" type="submit">add</button>
+                <button class="material-icons button-hover add-fanfic" asp-controller="Account" asp-action="EndChangePreferences" type="submit">check</button>
+            </div>
+            <div>
 
                 @foreach(Preference p in ViewBag.preferences) {
 
-                @foreach(Fandom fandom in ViewBag.fandoms) {
-                    if(fandom.Id == p.FandomId) {
-                        <span>@fandom.Name</span>
+                    @foreach(Fandom fandom in ViewBag.fandoms) {
+                        if(fandom.Id == p.FandomId) {
+                            <div class="card" style="width: 300px">
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        @fandom.Name
+                                        <button class="material-icons add-fanfic button-hover" asp-controller="Account" asp-action="RemovePreference" type="submit">delete</button>
+                                        <input type="hidden" value="@p.Id" name="preferenceId" />
+                                    </h4>
+                                </div>
+                            </div>
+                        }
                     }
+
                 }
-                    <input class="badge-light" value="Delete" formaction="RemovePreference" type="submit" />
-                    <hr />
-                    <input type="hidden" value="@p.Id" name="preferenceId"/>
-                }
-                    </div>
-                </form>
+            </div>
+            </form>
         }
+        </div>
     </div>

@@ -44,6 +44,12 @@
 .chapter-block{
     display:inline-block;
 }
+.reverse {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+}
 a.material-icons:hover{
     text-decoration:none;
 }
@@ -94,4 +100,31 @@ h3 {
     font-size:30px;
     margin: 3px;
     text-align:right;
+}
+.sort-link {
+    color: #C5AFAF;
+}
+.sort-block{
+    display:flex;
+    justify-content: center;
+}
+.tag1 {
+    color: #e2ae6c;
+    font-size: 15px !important;
+}
+.tag2 {
+    color: #e2ae6c;
+    font-size: 20px !important;
+}
+.tag3 {
+    color: #e2ae6c;
+    font-size: 25px !important;
+}
+.tag4 {
+    color: #e2ae6c;
+    font-size: 30px !important;
+}
+.tag5 {
+    color: #e2ae6c;
+    font-size: 35px !important;
 }

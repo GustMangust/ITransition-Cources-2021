@@ -4,13 +4,24 @@
 *@
     <head>
         <link type="text/css" rel="stylesheet" href="~/css/all-fanfics.css" media="all" />
+        @section Scripts{
+            <script src="Scripts/jquery-3.6.0.js"></script>
+            <script src="Scripts/jquery-3.6.0.min.js"></script>
+            <script src="~/js/script.js">
 
+
+                //a.innerHTML = '';
+            </script>
+        }
     </head>
-    <a asp-controller="Fanfic" asp-action="UserFanfics" asp-route-sortBy="titleAsc">Название по алфавиту</a>
-    <a asp-controller="Fanfic" asp-action="UserFanfics" asp-route-sortBy="titleDesc">Название в обратном порядке</a>
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-md-center" style="margin-top:40px;">
 
         <div class="col-md-auto">
+        <div class="sort-block">
+
+            <a asp-controller="Fanfic" asp-action="UserFanfics" class="card-link sort-link" asp-route-sortBy="titleAsc">Отсортировать по алфавиту</a>
+            <a asp-controller="Fanfic" asp-action="UserFanfics" class="card-link sort-link" asp-route-sortBy="titleDesc">Отсортировать в обратном порядке</a>
+        </div>
             @foreach(Fanfic f in Model.fanfics) {
             <div class="card" style="width: 36rem;">
                 <div class="card-body">
